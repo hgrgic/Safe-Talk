@@ -1,0 +1,27 @@
+# Logs #
+######################
+*.log
+*/logs
+
+# OS generated files #
+######################
+.DS_Store
+
+# IDEA #
+######################
+.idea
+*.iml
+
+
+# Maven #
+######################
+/target
+
+# Gradle #
+.gradle
+/gradle
+
+# Class files #
+*.class
+
+STController/out/*

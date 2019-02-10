@@ -1,0 +1,80 @@
+package io.safe.talk.encryption.generator;
+
+import io.safe.talk.encryption.Encryptable;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.*;
+
+public class SecreteKeyGenerator implements Encryptable{
+    private KeyPairGenerator keyGen;
+    private KeyPair pair;
+    private KeyGenerator kgen;
+
+    private SecureRandom srandom;
+    private IvParameterSpec ivspec;
+    private byte[] iv;
+
+    private PrivateKey privateKey;
+    private PublicKey publicKey;
+    private SecretKey secretKey;
+
+    public SecreteKeyGenerator() throws NoSuchAlgorithmException, NoSuchProviderException {
+        this.keyGen = KeyPairGenerator.getInstance("RSA");
+        this.keyGen.initialize(Encryptable.RSA_LENGTH);
+
+        this.kgen = KeyGenerator.getInstance("AES");
+        this.kgen.init(Encryptable.AES_LENGTH);
+
+        this.srandom = new SecureRandom();
+    }
+
+    public void createRSAKeys() {
+        this.pair = this.keyGen.generateKeyPair();
+        this.privateKey = pair.getPrivate();
+        this.publicKey = pair.getPublic();
+    }
+
+    public void createAESKey() throws NoSuchAlgorithmException {
+        this.secretKey = this.kgen.generateKey();
+
+        this.iv = new byte[128/8];
+        this.srandom.nextBytes(iv);
+        this.ivspec = new IvParameterSpec(iv);
+    }
+
+    public void writeToFile(String path, byte[] key) throws IOException {
+        File f = new File(path);
+        f.getParentFile().mkdirs();
+
+        FileOutputStream fos = new FileOutputStream(f);
+        fos.write(key);
+        fos.flush();
+        fos.close();
+    }
+
+
+    public IvParameterSpec getIvspec() {
+        return ivspec;
+    }
+
+    public byte[] getIv() {
+        return iv;
+    }
+
+    public PrivateKey getPrivateKey() {
+        return privateKey;
+    }
+
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public SecretKey getSecretKey() {
+        return secretKey;
+    }
+}

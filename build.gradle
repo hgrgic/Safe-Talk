@@ -1,0 +1,75 @@
+group 'io.safe.talk'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+
+    sourceCompatibility = 1.8
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
+        compile group: 'org.jdom', name: 'jdom', version: '2.0.2'
+        compileOnly "org.projectlombok:lombok:1.16.16"
+        testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+        compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+        compile group: 'javax.activation', name: 'activation', version: '1.1'
+        compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+        compile group: 'org.json', name: 'json', version: '20090211'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+project(':STView') {
+    dependencies {
+        //Future dependencies
+        compile 'com.jfoenix:jfoenix:8.0.3'
+        compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
+
+    }
+
+    jar{
+        manifest {
+//            attributes "Main-Class": ""
+        }
+
+        from {
+            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+    }
+}
+
+
+project(':STController') {
+    dependencies {
+        //Future dependencies
+        compile project(':STModel')
+        compile project(':STEncryption')
+    }
+}
+
+project(':STView') {
+    dependencies {
+        //Future dependencies
+        compile project(':STController')
+    }
+}

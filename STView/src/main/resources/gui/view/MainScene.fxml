@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXChipView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.safe.talk.gui.MainSceneController">
+
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem fx:id="instanceMenuItem" mnemonicParsing="false" text="Create contact" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="quitAppMenuItem" mnemonicParsing="false" text="Quit Application" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <BorderPane fx:id="borderPaneHome" prefHeight="200.0" prefWidth="200.0">
+      <left>
+        <AnchorPane BorderPane.alignment="CENTER">
+          <children>
+            <TitledPane animated="false" collapsible="false" prefHeight="549.0" prefWidth="220.0" text="Contacts">
+              <content>
+                <AnchorPane fx:id="instancePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2e6cd1;">
+                  <children>
+                    <ListView fx:id="lvInstances" layoutX="9.0" layoutY="27.0" onMouseClicked="#selectContact" prefHeight="437.0" prefWidth="200.0" />
+                    <Button fx:id="btnNewInstance" depthTest="ENABLE" layoutX="32.0" layoutY="473.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" style="-fx-background-color: #2e6cd1#2e6cd1;" text="Safe Talk" textFill="#f8f6f6" underline="true">
+                      <font>
+                        <Font size="17.0" />
+                      </font>
+                      <effect>
+                        <Blend />
+                      </effect>
+                    </Button>
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+          </children>
+        </AnchorPane>
+      </left>
+      <center>
+        <ScrollPane prefHeight="625.0" prefWidth="860.0" BorderPane.alignment="CENTER">
+          <content>
+            <AnchorPane id="Content" fx:id="paneInstance" minHeight="-1.0" minWidth="-1.0" prefHeight="626.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+              <children>
+                <TabPane fx:id="tabPaneApp" layoutX="-8.0" layoutY="210.0" prefHeight="416.0" prefWidth="849.0" tabClosingPolicy="UNAVAILABLE">
+                  <tabs>
+                    <Tab text="Write">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="744.0">
+                          <children>
+                            <Button fx:id="startBtn" depthTest="ENABLE" layoutX="576.0" layoutY="250.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="239.0" style="-fx-background-color: #4ac454#4ac454;" text="Encrypt" textAlignment="CENTER" textFill="#fffefe">
+                              <cursor>
+                                <Cursor fx:constant="HAND" />
+                              </cursor>
+                            </Button>
+                            <TextArea layoutX="39.0" layoutY="27.0" prefHeight="200.0" prefWidth="774.0" promptText="Write your message..." />
+                          </children></AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Read">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      </content>
+                    </Tab>
+                  </tabs></TabPane>
+
+                <Label layoutX="186.0" layoutY="51.0" prefHeight="22.0" prefWidth="100.0" text="Receivers:">
+                  <font>
+                    <Font size="17.0" />
+                  </font>
+                </Label>
+                <Label layoutX="188.0" layoutY="123.0" text="Private Key:">
+                  <font>
+                    <Font size="17.0" />
+                  </font>
+                </Label>
+                <TextField fx:id="tfDatXlsName" disable="true" editable="false" layoutX="312.0" layoutY="120.0" prefHeight="27.0" prefWidth="461.0">
+                  <cursor>
+                    <Cursor fx:constant="CLOSED_HAND" />
+                  </cursor></TextField>
+                <Button fx:id="btnXlsFile" layoutX="797.0" layoutY="120.0" mnemonicParsing="false" text="...">
+                  <cursor>
+                    <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                <JFXChipView fx:id="chipView" layoutX="312.0" layoutY="12.0" prefHeight="69.0" prefWidth="515.0" />
+              </children>
+            </AnchorPane>
+
+          </content>
+          <cursor>
+            <Cursor fx:constant="DEFAULT" />
+          </cursor>
+        </ScrollPane>
+      </center>
+    </BorderPane>
+    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+      <children>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Label fx:id="versionLabel" maxWidth="-1.0" HBox.hgrow="NEVER">
+          <font>
+            <Font size="11.0" fx:id="x3" />
+          </font>
+          <textFill>
+            <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+          </textFill></Label>
+      </children>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+  </children>
+</VBox>
