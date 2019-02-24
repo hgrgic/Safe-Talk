@@ -1,10 +1,7 @@
 package io.safe.talk.cli.logger;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 public class OperationsLogger {
     private static Logger logger = Logger.getLogger("OperationsLog");
@@ -12,10 +9,11 @@ public class OperationsLogger {
 
     private OperationsLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
-        FileHandler fh = new FileHandler("Operations_Log.log", true);
+        FileHandler fh = new FileHandler("operations.log", true);
         fh.setFormatter(formatter);
 
-        logger.setUseParentHandlers(false);
+
+        logger.setUseParentHandlers(true);
         logger.addHandler(fh);
     }
 

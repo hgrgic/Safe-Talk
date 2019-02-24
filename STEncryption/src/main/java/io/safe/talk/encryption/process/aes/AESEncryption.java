@@ -26,7 +26,6 @@ public class AESEncryption extends EncryptionHelper {
     }
 
     public void encryptFile(String inputFile, String publicKeyLocation) throws IOException, GeneralSecurityException {
-
         try (FileOutputStream out = new FileOutputStream(inputFile + ".enc")) {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, new RSAEncryption().getPublic(publicKeyLocation));
@@ -34,9 +33,7 @@ public class AESEncryption extends EncryptionHelper {
             byte[] b = cipher.doFinal(secretKey.getEncoded());
             out.write(b);
 
-
             out.write(gen.getIv());
-
 
             Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
             ci.init(Cipher.ENCRYPT_MODE, secretKey, gen.getIvspec());

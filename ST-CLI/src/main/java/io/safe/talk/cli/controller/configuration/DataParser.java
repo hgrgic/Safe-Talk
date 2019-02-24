@@ -1,4 +1,4 @@
-package io.safe.talk.cli.util;
+package io.safe.talk.cli.controller.configuration;
 
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
@@ -16,21 +16,17 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataParser {
+public interface DataParser {
 
-    private DataParser(){
-
-    }
-
-    public static CommandLine parseArgs(String [] args){
+    static CommandLine parseArgs(String [] args){
         try {
             Options options = new Options();
             options.addOption("h","help", false, "Help instructions");
             options.addOption("i","input", true, "Pointer to the absolute path of the input file");
             options.addOption("o","output", true, "Pointer to the absolute path of the output directory.");
-            options.addOption("e","encrypt", false, "Mark that signifies encryption command");
-            options.addOption("d","decrypt", false, "Mark that signifies decryption command");
-            options.addOption("ek","encryption-key", true, "Pointer to the encryption / decryption key");
+            options.addOption("e", false, "Mark that signifies encryption command");
+            options.addOption("d", false, "Mark that signifies decryption command");
+            options.addOption("pk","public-key", true, "Pointer to the encryption key");
 
 
             CommandLineParser parser = new DefaultParser();
@@ -55,7 +51,7 @@ public class DataParser {
         }
     }
 
-    public static Map parseConfiguration(File cfg){
+    static Map parseConfiguration(File cfg){
         Map confCommands = new HashMap();
 
         try(BufferedReader br = new BufferedReader(new FileReader(cfg))) {
@@ -76,11 +72,11 @@ public class DataParser {
         return confCommands;
     }
 
-    public static String[] parseFilename(File cfg){
+    static String[] parseFilename(File cfg){
         return  cfg.getName().substring(0, cfg.getName().indexOf('.')).split("#");
     }
 
-    public static String humanToCamelCase(String str){
+    static String humanToCamelCase(String str){
         StringBuilder sb = new StringBuilder();
         String [] parts = str.split(" ");
 

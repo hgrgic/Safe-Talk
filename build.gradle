@@ -48,7 +48,7 @@ project(':ST-CLI'){
 
     jar{
         manifest {
-            attributes "Main-Class": "STApplicationCLI"
+            attributes "Main-Class": "io.safe.talk.cli.STApplicationCLI"
         }
 
         from {

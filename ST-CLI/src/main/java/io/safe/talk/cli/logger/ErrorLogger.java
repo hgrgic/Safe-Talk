@@ -12,10 +12,10 @@ public class ErrorLogger {
 
     private ErrorLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
-        FileHandler fh = new FileHandler("Error_Log.log", true);
+        FileHandler fh = new FileHandler("errors.log", true);
         fh.setFormatter(formatter);
 
-        logger.setUseParentHandlers(false);
+        logger.setUseParentHandlers(true);
         logger.addHandler(fh);
     }
 

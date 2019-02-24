@@ -1,7 +1,7 @@
 package io.safe.talk.cli;
 
 import io.safe.talk.cli.controller.configuration.SystemBuilder;
-import io.safe.talk.cli.util.DataParser;
+import io.safe.talk.cli.controller.configuration.DataParser;
 import org.apache.commons.cli.CommandLine;
 
 public class STApplicationCLI {

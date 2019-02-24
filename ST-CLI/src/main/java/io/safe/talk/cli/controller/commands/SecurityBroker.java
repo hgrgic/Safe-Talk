@@ -4,12 +4,12 @@ import java.io.File;
 
 public class SecurityBroker {
 
-    public void encryptFile(File targetFile, File publicKey){
-        EncryptCommand ec = new EncryptCommand(targetFile, publicKey);
+    public void encryptFile(String targetFilePath, String publicKeyPath){
+        EncryptCommand ec = new EncryptCommand(targetFilePath, publicKeyPath);
         ec.execute();
     }
 
-    public void decryptFile(File targetFile){
+    public void decryptFile(String targetFile){
         DecryptCommand dc = new DecryptCommand(targetFile);
         dc.execute();
     }

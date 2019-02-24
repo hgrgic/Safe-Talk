@@ -17,33 +17,29 @@ public class VerifierAgent{
     }
 
     private byte[] loadSignature(String pathToSig) throws IOException {
-        FileInputStream sigfis = new FileInputStream(pathToSig);
-        byte[] sigToVerify = new byte[sigfis.available()];
-        sigfis.read(sigToVerify);
-        sigfis.close();
+        try(FileInputStream sigfis = new FileInputStream(pathToSig)){
+            byte[] sigToVerify = new byte[sigfis.available()];
+            sigfis.read(sigToVerify);
 
-        return sigToVerify;
+            return sigToVerify;
+        }
     }
 
     private boolean verifySignature(String pathToData, byte [] sigToVerify) throws IOException, SignatureException {
-        FileInputStream datafis = new FileInputStream(pathToData);
-        BufferedInputStream bufin = new BufferedInputStream(datafis);
-
-        byte[] buffer = new byte[1024];
-        int len;
-        while (bufin.available() != 0) {
-            len = bufin.read(buffer);
-            rsa.update(buffer, 0, len);
-        };
-
-        bufin.close();
-        return rsa.verify(sigToVerify);
+        try(FileInputStream datafis = new FileInputStream(pathToData); BufferedInputStream bufin = new BufferedInputStream(datafis)){
+            byte[] buffer = new byte[1024];
+            int len;
+            while (bufin.available() != 0) {
+                len = bufin.read(buffer);
+                rsa.update(buffer, 0, len);
+            }
+            return rsa.verify(sigToVerify);
+        }
     }
 
     public boolean execute(PublicKey publicKey, String pathToSig, String pathToData) throws InvalidKeyException, IOException, SignatureException {
         this.initializeVerificationProcedure(publicKey);
         byte[] sig = this.loadSignature(pathToSig);
-        boolean valid = this.verifySignature(pathToData, sig);
-        return valid;
+        return this.verifySignature(pathToData, sig);
     }
 }

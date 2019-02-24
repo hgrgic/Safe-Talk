@@ -1,9 +1,9 @@
 package io.safe.talk.cli.controller.commands;
 
 import io.safe.talk.cli.logger.ErrorLogger;
+import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESEncryption;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -11,19 +11,22 @@ import java.security.NoSuchProviderException;
 import java.util.logging.Level;
 
 public class EncryptCommand implements Securable {
-    private File targetFile;
-    private File publicKey;
+    private String targetFilePath;
+    private String publicKeyPath;
 
-    public EncryptCommand(File targetFile, File publicKey) {
-        this.targetFile = targetFile;
-        this.publicKey = publicKey;
+    public EncryptCommand(String targetFilePath, String publicKeyPath) {
+        this.targetFilePath = targetFilePath;
+        this.publicKeyPath = publicKeyPath;
     }
 
     @Override
     public void execute() {
         try{
+            OperationsLogger.getLogger().log(Level.INFO, "Encryption of file started");
             AESEncryption aesEncryption = new AESEncryption();
-            aesEncryption.encryptFile(targetFile.getPath(), publicKey.getPath());
+            aesEncryption.createAESKey();
+            aesEncryption.encryptFile(this.targetFilePath, this.publicKeyPath);
+            OperationsLogger.getLogger().log(Level.INFO, "File encrypted successfully.");
 
         }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
             ErrorLogger.getLogger().log(Level.SEVERE, npe.getLocalizedMessage(), npe);
@@ -33,6 +36,9 @@ public class EncryptCommand implements Securable {
 
         }catch (IOException ioe){
             ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
+
+        }catch (Exception e){
+            ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 }
