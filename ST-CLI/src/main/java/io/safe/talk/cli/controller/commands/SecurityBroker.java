@@ -1,7 +1,5 @@
 package io.safe.talk.cli.controller.commands;
 
-import java.io.File;
-
 public class SecurityBroker {
 
     public void encryptFile(String targetFilePath, String publicKeyPath){

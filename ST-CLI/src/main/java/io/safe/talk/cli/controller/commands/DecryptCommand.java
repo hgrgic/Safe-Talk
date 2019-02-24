@@ -4,7 +4,6 @@ import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESDecryption;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;

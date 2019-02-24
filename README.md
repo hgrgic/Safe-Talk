@@ -1,4 +1,4 @@
-#Safe-Talk encryption utility
+# Safe-Talk encryption utility
 This application is a small encryption utility tool.
 It is using RSA & AES encryption protocols to generate secure keys and encrypt respective files.
 
@@ -11,7 +11,7 @@ In order to start application
     * To decrypt a file: `java -jar ST-CLI.jar -d -i /path/to/input/file`
     
 Application when first started will automatically check you local configuration and generate personal private and public 
-keys. These files are going to be locates in you `home-directory/Installs/safe-talk/personal` directory.
+keys. These files are going to be locates in your `home-directory/Installs/safe-talk/personal` directory.
 
 **You should never share your private key!**
 

@@ -2,6 +2,7 @@ package io.safe.talk.cli.controller.configuration;
 
 import io.safe.talk.cli.controller.commands.SecurityBroker;
 import io.safe.talk.cli.controller.configuration.exceptions.ConflictingCommandsException;
+import io.safe.talk.cli.controller.configuration.exceptions.MissingCommandArgumentException;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.encryption.generator.SecreteKeyGenerator;
@@ -46,14 +47,23 @@ public class SystemBuilder{
                 throw new ConflictingCommandsException();
             }else{
                 if(cmd.hasOption('e')){
-                    new SecurityBroker().encryptFile(cmd.getOptionValue('i'), cmd.getOptionValue("pk"));
-
+                    if(cmd.hasOption('i') && cmd.hasOption("pk")){
+                        new SecurityBroker().encryptFile(cmd.getOptionValue('i'), cmd.getOptionValue("pk"));
+                    }else {
+                        throw new MissingCommandArgumentException();
+                    }
                 }else if(cmd.hasOption('d')){
-                    new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
+                    if(cmd.hasOption('i')){
+                        new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
+                    }else {
+                        throw new MissingCommandArgumentException();
+                    }
+                }else {
+                    throw new MissingCommandArgumentException();
                 }
             }
-        }catch (ConflictingCommandsException cce){
-            ErrorLogger.getLogger().log(Level.SEVERE, cce.getLocalizedMessage(), cce);
+        }catch (ConflictingCommandsException | MissingCommandArgumentException ce){
+            ErrorLogger.getLogger().log(Level.SEVERE, ce.getLocalizedMessage(), ce);
         }
     }
 }

@@ -23,7 +23,6 @@ public interface DataParser {
             Options options = new Options();
             options.addOption("h","help", false, "Help instructions");
             options.addOption("i","input", true, "Pointer to the absolute path of the input file");
-            options.addOption("o","output", true, "Pointer to the absolute path of the output directory.");
             options.addOption("e", false, "Mark that signifies encryption command");
             options.addOption("d", false, "Mark that signifies decryption command");
             options.addOption("pk","public-key", true, "Pointer to the encryption key");
@@ -34,7 +33,7 @@ public interface DataParser {
 
             if (cmd.hasOption("h")){
                 HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp( "STF Command Line Applications", options);
+                formatter.printHelp( "Safe Talk Command Line Applications", options);
                 return null;
             }else {
                 return cmd;
