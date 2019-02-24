@@ -10,9 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.*;
 
-public class SecreteKeyGenerator implements Encryptable{
+public class SecreteKeyGenerator{
     private KeyPairGenerator keyGen;
-    private KeyPair pair;
     private KeyGenerator kgen;
 
     private SecureRandom srandom;
@@ -34,12 +33,12 @@ public class SecreteKeyGenerator implements Encryptable{
     }
 
     public void createRSAKeys() {
-        this.pair = this.keyGen.generateKeyPair();
+        KeyPair pair = this.keyGen.generateKeyPair();
         this.privateKey = pair.getPrivate();
         this.publicKey = pair.getPublic();
     }
 
-    public void createAESKey() throws NoSuchAlgorithmException {
+    public void createAESKey() {
         this.secretKey = this.kgen.generateKey();
 
         this.iv = new byte[128/8];
@@ -50,11 +49,10 @@ public class SecreteKeyGenerator implements Encryptable{
     public void writeToFile(String path, byte[] key) throws IOException {
         File f = new File(path);
         f.getParentFile().mkdirs();
-
-        FileOutputStream fos = new FileOutputStream(f);
-        fos.write(key);
-        fos.flush();
-        fos.close();
+        try(FileOutputStream fos = new FileOutputStream(f)){
+            fos.write(key);
+            fos.flush();
+        }
     }
 
 

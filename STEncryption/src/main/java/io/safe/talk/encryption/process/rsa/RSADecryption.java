@@ -17,7 +17,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 public class RSADecryption extends EncryptionHelper {
     private Cipher cipher;
 
-    public RSADecryption(Cipher cipher) throws NoSuchAlgorithmException, NoSuchPaddingException {
+    public RSADecryption(Cipher cipher) {
         super();
         this.cipher = cipher;
     }
@@ -27,7 +27,6 @@ public class RSADecryption extends EncryptionHelper {
         this.cipher = Cipher.getInstance("RSA");
     }
 
-    // https://docs.oracle.com/javase/8/docs/api/java/security/spec/PKCS8EncodedKeySpec.html
     public PrivateKey getPrivate(String filename) throws IOException, GeneralSecurityException {
         byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -35,7 +34,15 @@ public class RSADecryption extends EncryptionHelper {
         return kf.generatePrivate(spec);
     }
 
-
+    /**
+     * Deprecated because it is not useful beyond text files.
+     * @param input
+     * @param output
+     * @param key
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+    @Deprecated
     public void decryptTextFile(byte[] input, File output, PrivateKey key) throws IOException, GeneralSecurityException {
         this.cipher.init(Cipher.DECRYPT_MODE, key);
         writeToFile(output, this.cipher.doFinal(input));

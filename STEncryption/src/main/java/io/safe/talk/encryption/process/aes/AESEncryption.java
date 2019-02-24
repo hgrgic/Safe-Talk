@@ -1,6 +1,5 @@
 package io.safe.talk.encryption.process.aes;
 
-import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.encryption.generator.SecreteKeyGenerator;
 import io.safe.talk.encryption.process.EncryptionHelper;
 import io.safe.talk.encryption.process.rsa.RSAEncryption;
@@ -10,10 +9,9 @@ import java.io.*;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.spec.InvalidKeySpecException;
 
 
-public class AESEncryption extends EncryptionHelper implements Encryptable {
+public class AESEncryption extends EncryptionHelper {
 
     private SecreteKeyGenerator gen;
     private SecretKey secretKey;
@@ -22,7 +20,7 @@ public class AESEncryption extends EncryptionHelper implements Encryptable {
         this.gen = new SecreteKeyGenerator();
     }
 
-    public void createAESKey()throws Exception {
+    public void createAESKey() {
         this.gen.createAESKey();
         this.secretKey = this.gen.getSecretKey();
     }
@@ -30,17 +28,15 @@ public class AESEncryption extends EncryptionHelper implements Encryptable {
     public void encryptFile(String inputFile, String publicKeyLocation) throws IOException, GeneralSecurityException {
 
         try (FileOutputStream out = new FileOutputStream(inputFile + ".enc")) {
-            {
-                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-                cipher.init(Cipher.ENCRYPT_MODE, new RSAEncryption().getPublic(publicKeyLocation));
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, new RSAEncryption().getPublic(publicKeyLocation));
 
-                byte[] b = cipher.doFinal(secretKey.getEncoded());
-                out.write(b);
-                System.err.println("AES Key Length: " + b.length);
-            }
+            byte[] b = cipher.doFinal(secretKey.getEncoded());
+            out.write(b);
+
 
             out.write(gen.getIv());
-            System.err.println("IV Length: " + gen.getIv().length);
+
 
             Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
             ci.init(Cipher.ENCRYPT_MODE, secretKey, gen.getIvspec());

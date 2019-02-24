@@ -3,6 +3,7 @@ package io.safe.talk.util;
 import java.io.File;
 
 public class FileUtility {
+    private FileUtility(){}
 
     public static String pathBuilder(String root, String... dirs){
         StringBuilder sb = new StringBuilder(root);

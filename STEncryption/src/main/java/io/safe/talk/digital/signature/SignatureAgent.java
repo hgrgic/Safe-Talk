@@ -15,14 +15,13 @@ public class SignatureAgent{
     }
 
     private void supplyProtectedData(String pathToData) throws IOException, SignatureException {
-        FileInputStream fis = new FileInputStream(pathToData);
-        BufferedInputStream bufin = new BufferedInputStream(fis);
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = bufin.read(buffer)) >= 0) {
-            rsa.update(buffer, 0, len);
+        try(FileInputStream fis = new FileInputStream(pathToData); BufferedInputStream bufin = new BufferedInputStream(fis)){
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bufin.read(buffer)) >= 0) {
+                rsa.update(buffer, 0, len);
+            }
         }
-        bufin.close();
     }
 
     private byte[] generateSignature() throws SignatureException {
@@ -30,9 +29,9 @@ public class SignatureAgent{
     }
 
     private void saveSignature(String outputLocation, byte[] realSig) throws IOException {
-        FileOutputStream sigfos = new FileOutputStream(outputLocation);
-        sigfos.write(realSig);
-        sigfos.close();
+        try(FileOutputStream sigfos = new FileOutputStream(outputLocation)){
+            sigfos.write(realSig);
+        }
     }
 
     public void execute(PrivateKey privateKey, String inputLocation, String outputLocation) throws InvalidKeyException, IOException, SignatureException {

@@ -1,6 +1,4 @@
 rootProject.name = 'SafeTalk'
-include 'STView'
-include 'STModel'
 include 'STEncryption'
-include 'STController'
+include 'ST-CLI'
 

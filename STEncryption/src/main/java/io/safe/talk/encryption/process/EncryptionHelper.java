@@ -7,21 +7,22 @@ import java.io.*;
 
 public class EncryptionHelper {
 
-    protected void writeToFile(File output, byte[] toWrite)
-            throws IllegalBlockSizeException, BadPaddingException, IOException {
-        FileOutputStream fos = new FileOutputStream(output);
-        fos.write(toWrite);
-        fos.flush();
-        fos.close();
+    protected void writeToFile(File output, byte[] toWrite) throws IOException {
+
+        try(FileOutputStream fos = new FileOutputStream(output)){
+            fos.write(toWrite);
+            fos.flush();
+        }
     }
 
 
     public byte[] getFileInBytes(File f) throws IOException {
-        FileInputStream fis = new FileInputStream(f);
-        byte[] fbytes = new byte[(int) f.length()];
-        fis.read(fbytes);
-        fis.close();
-        return fbytes;
+        try(FileInputStream fis = new FileInputStream(f)){
+            byte[] fbytes = new byte[(int) f.length()];
+            fis.read(fbytes);
+            return fbytes;
+        }
+
     }
 
     protected void processFile(Cipher ci, InputStream in, OutputStream out) throws IllegalBlockSizeException, BadPaddingException, IOException {

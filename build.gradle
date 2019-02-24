@@ -39,37 +39,20 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-project(':STView') {
-    dependencies {
-        //Future dependencies
-        compile 'com.jfoenix:jfoenix:8.0.3'
-        compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
 
+project(':ST-CLI'){
+    dependencies{
+        compile project(':STEncryption')
+        compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
     }
 
     jar{
         manifest {
-//            attributes "Main-Class": ""
+            attributes "Main-Class": "STApplicationCLI"
         }
 
         from {
             configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
         }
-    }
-}
-
-
-project(':STController') {
-    dependencies {
-        //Future dependencies
-        compile project(':STModel')
-        compile project(':STEncryption')
-    }
-}
-
-project(':STView') {
-    dependencies {
-        //Future dependencies
-        compile project(':STController')
     }
 }

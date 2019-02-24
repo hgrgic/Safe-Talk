@@ -6,7 +6,7 @@ import io.safe.talk.encryption.process.aes.AESEncryption;
 import org.junit.Test;
 
 
-public class SymmetricEncryptionTest implements Encryptable {
+public class SymmetricEncryptionTest {
 
     @Test
     public void testSymmetricEnc() throws Exception {
@@ -18,6 +18,6 @@ public class SymmetricEncryptionTest implements Encryptable {
     @Test
     public void testSymmetricDec() throws Exception {
         AESDecryption sd = new AESDecryption();
-        sd.decryptFile("/Users/HrvojeGrgic/Desktop/Enc/image.png.enc");
+        sd.decryptFile("/Users/HrvojeGrgic/Desktop/image.png.enc");
     }
 }
