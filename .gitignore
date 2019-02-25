@@ -25,3 +25,7 @@
 *.class
 
 STController/out/*
+
+# Sonar #
+/build
+/test
