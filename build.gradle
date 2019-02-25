@@ -1,9 +1,9 @@
+plugins {
+    id "org.sonarqube" version "2.7"
+}
+
 group 'io.safe.talk'
 version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -33,12 +33,6 @@ subprojects {
         mavenCentral()
     }
 }
-
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
 
 project(':ST-CLI'){
     dependencies{
