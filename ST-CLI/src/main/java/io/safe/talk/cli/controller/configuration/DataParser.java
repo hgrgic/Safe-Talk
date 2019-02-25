@@ -1,31 +1,55 @@
 package io.safe.talk.cli.controller.configuration;
 
+import io.safe.talk.cli.controller.configuration.exceptions.ConflictingCommandsException;
+import io.safe.talk.cli.controller.configuration.exceptions.MissingCommandArgumentException;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import org.apache.commons.cli.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public interface DataParser {
+
+    static void validatePrimaryCommands(CommandLine commandLine){
+        Character [] primaryTags =  {'e','g','d'};
+        boolean primaryFound = false;
+        for(char tag: primaryTags){
+            if(commandLine.hasOption(tag) && !primaryFound){
+                primaryFound = true;
+            }else if(commandLine.hasOption(tag) && primaryFound){
+                throw new ConflictingCommandsException();
+            }
+        }
+    }
+
+    static void validateSecondaryCommands(CommandLine commandLine){
+        Map<String, String[]> relatedTagsMap =  new HashMap<>();
+        relatedTagsMap.put("e", new String[]{"i","pk"});
+        relatedTagsMap.put("d", new String[]{"i"});
+        relatedTagsMap.put("g", new String[]{});
+
+        for(Option option: commandLine.getOptions()){
+            if(relatedTagsMap.containsKey(option.getOpt())){
+                for(String relatedOptions: relatedTagsMap.get(option.getOpt())){
+                    if(!commandLine.hasOption(relatedOptions)){
+                        throw new MissingCommandArgumentException(relatedOptions);
+                    }
+                }
+            }
+        }
+    }
 
     static CommandLine parseArgs(String [] args){
         try {
             Options options = new Options();
             options.addOption("h","help", false, "Help instructions");
-            options.addOption("i","input", true, "Pointer to the absolute path of the input file");
+            options.addOption("i", true, "Pointer to the absolute path of the input file");
             options.addOption("e", false, "Mark that signifies encryption command");
             options.addOption("d", false, "Mark that signifies decryption command");
-            options.addOption("pk","public-key", true, "Pointer to the encryption key");
+            options.addOption("g", false, "Generate new set of personal public and private keys");
+            options.addOption("pk", true, "Pointer to the encryption key");
 
 
             CommandLineParser parser = new DefaultParser();
@@ -48,43 +72,5 @@ public interface DataParser {
             ErrorLogger.getLogger().log(Level.SEVERE, pe.getLocalizedMessage(), pe);
             return null;
         }
-    }
-
-    static Map parseConfiguration(File cfg){
-        Map confCommands = new HashMap();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(cfg))) {
-
-            String line;
-            List<String> tempcfgCommands = new ArrayList<>();
-            while ((line = br.readLine()) != null) {
-                Pattern p = Pattern.compile("\"([^\"]*)\"");
-                Matcher m = p.matcher(line);
-                while (m.find()) {
-                    tempcfgCommands.add(m.group(1));
-                }
-
-            }
-        }catch (IOException ioe){
-            ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
-        }
-        return confCommands;
-    }
-
-    static String[] parseFilename(File cfg){
-        return  cfg.getName().substring(0, cfg.getName().indexOf('.')).split("#");
-    }
-
-    static String humanToCamelCase(String str){
-        StringBuilder sb = new StringBuilder();
-        String [] parts = str.split(" ");
-
-        for(String part:parts) {
-            String as=part.toLowerCase();
-            int a=as.length();
-            sb.append(as.substring(0, 1).toUpperCase()+ as.substring(1,a));
-        }
-
-        return sb.toString();
     }
 }

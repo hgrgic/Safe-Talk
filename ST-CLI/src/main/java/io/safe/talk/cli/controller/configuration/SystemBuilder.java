@@ -1,69 +1,37 @@
 package io.safe.talk.cli.controller.configuration;
 
+import io.safe.talk.cli.controller.commands.GenerateKeysCommand;
 import io.safe.talk.cli.controller.commands.SecurityBroker;
 import io.safe.talk.cli.controller.configuration.exceptions.ConflictingCommandsException;
 import io.safe.talk.cli.controller.configuration.exceptions.MissingCommandArgumentException;
 import io.safe.talk.cli.logger.ErrorLogger;
-import io.safe.talk.encryption.Encryptable;
-import io.safe.talk.encryption.generator.SecreteKeyGenerator;
+import io.safe.talk.cli.logger.OperationsLogger;
 import org.apache.commons.cli.CommandLine;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.logging.Level;
 
-public class SystemBuilder{
+public class SystemBuilder {
 
-    public SystemBuilder(CommandLine cmd){
-        this.checkPersonalConfiguration();
+    public SystemBuilder(CommandLine cmd) {
         this.transformArgumentCommands(cmd);
     }
 
-    private void checkPersonalConfiguration() {
-        File homeRoot = new File(Encryptable.ROOT_KEY_LOCATION);
-        if (!homeRoot.exists()) {
-            homeRoot.mkdirs();
+    private void transformArgumentCommands(CommandLine cmd) {
+        try {
+            DataParser.validatePrimaryCommands(cmd);
+            DataParser.validateSecondaryCommands(cmd);
 
-            SecreteKeyGenerator gk;
-            try {
-                gk = new SecreteKeyGenerator();
-                gk.createRSAKeys();
-                gk.writeToFile(Encryptable.PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
-                gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
-
-            } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-                ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
-            } catch (IOException ioe) {
-                ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
+            if (cmd.hasOption('e')) {
+                new SecurityBroker().encryptFile(cmd.getOptionValue('i'), cmd.getOptionValue("pk"));
+            } else if (cmd.hasOption('d')) {
+                new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
+            } else if (cmd.hasOption('g')) {
+                new GenerateKeysCommand().execute();
             }
-        }
-    }
 
-    private void transformArgumentCommands(CommandLine cmd){
-        try{
-            if(cmd.hasOption('e') && cmd.hasOption('d')){
-                throw new ConflictingCommandsException();
-            }else{
-                if(cmd.hasOption('e')){
-                    if(cmd.hasOption('i') && cmd.hasOption("pk")){
-                        new SecurityBroker().encryptFile(cmd.getOptionValue('i'), cmd.getOptionValue("pk"));
-                    }else {
-                        throw new MissingCommandArgumentException();
-                    }
-                }else if(cmd.hasOption('d')){
-                    if(cmd.hasOption('i')){
-                        new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
-                    }else {
-                        throw new MissingCommandArgumentException();
-                    }
-                }else {
-                    throw new MissingCommandArgumentException();
-                }
-            }
-        }catch (ConflictingCommandsException | MissingCommandArgumentException ce){
+        } catch (ConflictingCommandsException | MissingCommandArgumentException ce) {
             ErrorLogger.getLogger().log(Level.SEVERE, ce.getLocalizedMessage(), ce);
+            OperationsLogger.getLogger().log(Level.INFO, "Encryption failed.");
         }
     }
 }
