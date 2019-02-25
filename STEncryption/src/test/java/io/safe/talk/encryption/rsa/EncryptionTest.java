@@ -42,29 +42,4 @@ public class EncryptionTest {
                 "\nEnc Length: " + encrypted_msg.length()
                 + "\nDecrypted Message: " + decrypted_msg);
     }
-    
-    @Test
-    public void testEncDecTextFile() throws Exception{
-        RSAEncryption ac = new RSAEncryption();
-        RSADecryption dc = new RSADecryption();
-
-
-        PrivateKey privateKey = dc.getPrivate("/Users/HrvojeGrgic/Desktop/Enc/privateKey");
-        PublicKey publicKey = ac.getPublic("/Users/HrvojeGrgic/Desktop/Enc/publicKey");
-        
-        if (new File("/Users/HrvojeGrgic/Desktop/Enc/text.txt").exists()) {
-            ac.encryptFile(ac.getFileInBytes(new File("/Users/HrvojeGrgic/Desktop/Enc/text.txt")),
-                    new File("/Users/HrvojeGrgic/Desktop/Enc/text_enc.txt"),publicKey);
-        } else {
-            System.out.println("Create a file text.txt under folder KeyPair");
-        }
-
-        if (new File("/Users/HrvojeGrgic/Desktop/Enc/text_enc.txt").exists()) {
-
-            dc.decryptTextFile(ac.getFileInBytes(new File("/Users/HrvojeGrgic/Desktop/Enc/text_enc.txt")),
-                    new File("/Users/HrvojeGrgic/Desktop/Enc/text_dec.txt"), privateKey);
-        } else {
-            System.out.println("Create a file text.txt under folder KeyPair");
-        }
-    }
 }

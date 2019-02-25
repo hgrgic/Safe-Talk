@@ -33,22 +33,6 @@ public class RSAEncryption extends EncryptionHelper {
         return kf.generatePublic(spec);
     }
 
-    /**
-     * @Deprecated
-     * Not very useful as it only can encrypt text files.
-     *
-     * @param input
-     * @param output
-     * @param key
-     * @throws IOException
-     * @throws GeneralSecurityException
-     */
-    @Deprecated
-    public void encryptFile(byte[] input, File output, PublicKey key) throws IOException, GeneralSecurityException {
-        this.cipher.init(Cipher.ENCRYPT_MODE, key);
-        writeToFile(output, this.cipher.doFinal(input));
-    }
-
 
     public String encryptText(String msg, PublicKey key) throws UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         this.cipher.init(Cipher.ENCRYPT_MODE, key);

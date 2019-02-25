@@ -34,21 +34,6 @@ public class RSADecryption extends EncryptionHelper {
         return kf.generatePrivate(spec);
     }
 
-    /**
-     * Deprecated because it is not useful beyond text files.
-     * @param input
-     * @param output
-     * @param key
-     * @throws IOException
-     * @throws GeneralSecurityException
-     */
-    @Deprecated
-    public void decryptTextFile(byte[] input, File output, PrivateKey key) throws IOException, GeneralSecurityException {
-        this.cipher.init(Cipher.DECRYPT_MODE, key);
-        writeToFile(output, this.cipher.doFinal(input));
-    }
-
-
     public String decryptText(String msg, PrivateKey key) throws InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         this.cipher.init(Cipher.DECRYPT_MODE, key);
         return new String(cipher.doFinal(Base64.decodeBase64(msg)), "UTF-8");
