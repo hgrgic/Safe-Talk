@@ -24,7 +24,7 @@ public class AESDecryption extends EncryptionHelper {
             cipher.init(Cipher.DECRYPT_MODE, new RSADecryption().getPrivate(Encryptable.PRIVATE_KEY_LOCATION));
 
 
-            byte[] b = new byte[384];
+            byte[] b = new byte[256];
             if(in.read(b) > 0){
                 byte[] keyb = cipher.doFinal(b);
                 skey = new SecretKeySpec(keyb, "AES");
