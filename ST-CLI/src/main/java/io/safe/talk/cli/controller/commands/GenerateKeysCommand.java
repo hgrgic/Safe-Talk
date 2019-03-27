@@ -28,13 +28,12 @@ public class GenerateKeysCommand implements Securable {
                 gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
                 OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
 
-            } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            } catch (NoSuchAlgorithmException | IOException e) {
                 ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
                 OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
-            } catch (IOException ioe) {
-                ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
-                OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
             }
+        }else{
+            OperationsLogger.getLogger().log(Level.INFO, "Directory with keys already exists!");
         }
     }
 }

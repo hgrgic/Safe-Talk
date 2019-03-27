@@ -37,7 +37,6 @@ public class DecryptCommand implements Securable{
 
         }catch (Exception e){
             ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
-
         }
     }
 }

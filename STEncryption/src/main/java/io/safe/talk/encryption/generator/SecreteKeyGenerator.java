@@ -22,7 +22,7 @@ public class SecreteKeyGenerator{
     private PublicKey publicKey;
     private SecretKey secretKey;
 
-    public SecreteKeyGenerator() throws NoSuchAlgorithmException, NoSuchProviderException {
+    public SecreteKeyGenerator() throws NoSuchAlgorithmException {
         this.keyGen = KeyPairGenerator.getInstance("RSA");
         this.keyGen.initialize(Encryptable.RSA_LENGTH);
 
