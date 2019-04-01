@@ -1,5 +1,9 @@
 package io.safe.talk.cli.logger;
 
+import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.util.FileManipulationUtility;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.*;
 
@@ -9,7 +13,11 @@ public class OperationsLogger {
 
     private OperationsLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
-        FileHandler fh = new FileHandler("operations.log", true);
+        File logDir = new File(FileManipulationUtility.pathBuilder(Encryptable.ROOT_KEY_LOCATION, "logs"));
+        if(!logDir.exists()){
+            logDir.mkdirs();
+        }
+        FileHandler fh = new FileHandler(FileManipulationUtility.pathBuilder(logDir.getPath(), "operations.log"), true);
         fh.setFormatter(formatter);
 
 

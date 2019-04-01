@@ -1,5 +1,9 @@
 package io.safe.talk.cli.logger;
 
+import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.util.FileManipulationUtility;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -12,7 +16,12 @@ public class ErrorLogger {
 
     private ErrorLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
-        FileHandler fh = new FileHandler("errors.log", true);
+        File logDir = new File(FileManipulationUtility.pathBuilder(Encryptable.ROOT_KEY_LOCATION, "logs"));
+        if(!logDir.exists()){
+            logDir.mkdirs();
+        }
+
+        FileHandler fh = new FileHandler(FileManipulationUtility.pathBuilder(logDir.getPath(), "error.log"), true);
         fh.setFormatter(formatter);
 
         logger.setUseParentHandlers(true);
