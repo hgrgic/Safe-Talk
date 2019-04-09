@@ -29,3 +29,5 @@ STController/out/*
 # Sonar #
 /build
 /test
+ST-CLI/build
+STEncryption/build

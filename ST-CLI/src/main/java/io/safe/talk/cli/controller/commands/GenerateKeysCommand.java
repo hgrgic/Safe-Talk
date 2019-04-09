@@ -16,23 +16,21 @@ public class GenerateKeysCommand implements Securable {
     public void execute() {
         OperationsLogger.getLogger().log(Level.INFO, "Keys generation started.");
         File homeRoot = new File(Encryptable.ROOT_KEY_LOCATION);
-        if (!homeRoot.exists()) {
-            homeRoot.mkdirs();
+        if (!homeRoot.exists()) homeRoot.mkdirs();
 
-            SecreteKeyGenerator gk;
-            try {
-                gk = new SecreteKeyGenerator();
-                gk.createRSAKeys();
-                gk.writeToFile(Encryptable.PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
-                gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
-                OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
 
-            } catch (NoSuchAlgorithmException | IOException e) {
-                ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
-                OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
-            }
-        }else{
-            OperationsLogger.getLogger().log(Level.INFO, "Directory with keys already exists!");
+        SecreteKeyGenerator gk;
+        try {
+            gk = new SecreteKeyGenerator();
+            gk.createRSAKeys();
+            gk.writeToFile(Encryptable.PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
+            gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
+            OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
+
+        } catch (NoSuchAlgorithmException | IOException e) {
+            ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
+            OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
         }
+
     }
 }
