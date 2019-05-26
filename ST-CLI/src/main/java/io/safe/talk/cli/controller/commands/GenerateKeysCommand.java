@@ -18,7 +18,6 @@ public class GenerateKeysCommand implements Securable {
         File homeRoot = new File(Encryptable.ROOT_KEY_LOCATION);
         if (!homeRoot.exists()) homeRoot.mkdirs();
 
-
         SecreteKeyGenerator gk;
         try {
             gk = new SecreteKeyGenerator();

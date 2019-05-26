@@ -11,4 +11,8 @@ public class SecurityBroker {
         DecryptCommand dc = new DecryptCommand(targetFile);
         dc.execute();
     }
+
+    public void generateKeys(){
+        new GenerateKeysCommand().execute();
+    }
 }

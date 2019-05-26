@@ -50,3 +50,19 @@ project(':ST-CLI'){
         }
     }
 }
+
+project(':ST-GUI'){
+    dependencies {
+        compile project(':ST-CLI')
+        compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
+    }
+    jar{
+        manifest {
+            attributes "Main-Class": "io.safe.talk.gui.STApplicationGUI"
+        }
+
+        from {
+            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+    }
+}

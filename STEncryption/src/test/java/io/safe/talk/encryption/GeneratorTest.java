@@ -18,7 +18,7 @@ public class GeneratorTest {
                 gk.createRSAKeys();
                 gk.writeToFile("/Users/HrvojeGrgic/Desktop/Enc/publicKey", gk.getPublicKey().getEncoded());
                 gk.writeToFile("/Users/HrvojeGrgic/Desktop/Enc/privateKey", gk.getPrivateKey().getEncoded());
-            } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            } catch (NoSuchAlgorithmException e) {
                 System.err.println(e.getMessage());
             } catch (IOException e) {
                 System.err.println(e.getMessage());

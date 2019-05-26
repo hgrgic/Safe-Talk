@@ -26,7 +26,7 @@ public class SystemBuilder {
             } else if (cmd.hasOption('d')) {
                 new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
             } else if (cmd.hasOption('g')) {
-                new GenerateKeysCommand().execute();
+                new SecurityBroker().generateKeys();
             }
 
         } catch (ConflictingCommandsException | MissingCommandArgumentException ce) {

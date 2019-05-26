@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.security.PrivateKey;
 
+import static junit.framework.TestCase.assertTrue;
+
 public class SignatureProcedureTest {
 
     @Test
@@ -16,5 +18,7 @@ public class SignatureProcedureTest {
         SignatureAgent signatureAgent = new SignatureAgent();
         signatureAgent.execute(privateKey, "/Users/HrvojeGrgic/Desktop/Enc/text.txt",
                 "/Users/HrvojeGrgic/Desktop/Enc/signature");
+
+        assertTrue (true);
     }
 }

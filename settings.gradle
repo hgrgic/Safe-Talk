@@ -1,4 +1,5 @@
 rootProject.name = 'SafeTalk'
 include 'STEncryption'
 include 'ST-CLI'
+include 'ST-GUI'
 

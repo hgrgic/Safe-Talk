@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.safe.talk.gui.controller.HomeScreenController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="miGenerateKeys" mnemonicParsing="false" text="Generate Keys" />
+                        <MenuItem fx:id="miQuit" mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" text="Help" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="62.0" prefWidth="640.0" style="-fx-background-color: #c4c5c6#c4c5c6;">
+                    <children>
+                        <Button fx:id="btnEncrypt" layoutX="567.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #f46241#f46241;" text="Encrypt" textFill="#f8f3f3" />
+                        <Button fx:id="btnDecrypt" layoutX="486.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #15d850#15d850;" text="Decrypt" textFill="#f2f0f0" />
+                        <Button fx:id="btnAddFiles" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #58a6f4#58a6f4;" text="Add Files" textFill="#f5efef" />
+                    </children>
+                </Pane>
+                <ListView fx:id="lvFiles" layoutY="62.0" prefHeight="310.0" prefWidth="640.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
