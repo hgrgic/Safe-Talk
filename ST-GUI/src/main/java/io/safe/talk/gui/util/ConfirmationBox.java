@@ -19,4 +19,20 @@ public class ConfirmationBox {
 
         return false;
     }
+
+    public static void getSuccessBox(String header, String msg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(header);
+        alert.setContentText(msg);
+
+        alert.showAndWait();
+    }
+
+    public static void getFailBox(String msg){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(msg);
+        alert.showAndWait();
+    }
 }

@@ -16,9 +16,7 @@ import javafx.stage.FileChooser;
 import javax.swing.*;
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class HomeScreenController implements Initializable {
@@ -54,19 +52,25 @@ public class HomeScreenController implements Initializable {
 
         btnDecrypt.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                StringBuilder sb = new StringBuilder();
                 SecurityBroker securityBroker = new SecurityBroker();
 
                 HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                    securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath());
+                    if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
+                        sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
+                    }
                 });
 
                 HomeScreenController.this.lvFiles.getItems().clear();
                 HomeScreenController.this.listedFiles.clear();
+                ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
+
             }
         });
 
         btnEncrypt.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                StringBuilder sb = new StringBuilder();
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Select Public Key");
                 File selectedFile = fileChooser.showOpenDialog(null);
@@ -74,12 +78,14 @@ public class HomeScreenController implements Initializable {
                 if(selectedFile != null){
                     SecurityBroker securityBroker = new SecurityBroker();
                     HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                        securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(),
-                                selectedFile.getAbsolutePath());
+                        if (securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedFile.getAbsolutePath())) {
+                            sb.append(String.format("%s encrypted\n", listedFiles.get(item.toString()).getName()));
+                        }
                     });
 
                     HomeScreenController.this.lvFiles.getItems().clear();
                     HomeScreenController.this.listedFiles.clear();
+                    ConfirmationBox.getSuccessBox("Files encrypted successfully!", sb.toString());
                 }
             }
         });
@@ -97,7 +103,9 @@ public class HomeScreenController implements Initializable {
                         "new set of public / private keys? \nOld keys will be overwritten, and " +
                         "files encrypted with previous keys will no longer be accessible!");
                 if(isGenerate){
-                    new SecurityBroker().generateKeys();
+                    if (new SecurityBroker().generateKeys()) {
+                        ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                    }
                 }
             }
         });
