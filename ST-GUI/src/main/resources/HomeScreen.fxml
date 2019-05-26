@@ -17,8 +17,15 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
+                        <MenuItem fx:id="miSharePrivateKey" mnemonicParsing="false" text="Share Public Key" />
                         <MenuItem fx:id="miGenerateKeys" mnemonicParsing="false" text="Generate Keys" />
                         <MenuItem fx:id="miQuit" mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Digital Signatures">
+                    <items>
+                        <MenuItem fx:id="miSign" mnemonicParsing="false" text="Sign Files" />
+                        <MenuItem fx:id="miVerifySig" mnemonicParsing="false" text="Verify Digital Signatures" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -38,9 +45,9 @@
                 <Pane prefHeight="62.0" prefWidth="640.0" style="-fx-background-color: #c4c5c6#c4c5c6;">
                     <children>
                         <Button fx:id="btnEncrypt" layoutX="567.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #f46241#f46241;" text="Encrypt" textFill="#f8f3f3" />
-                        <Button fx:id="btnDecrypt" layoutX="486.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #15d850#15d850;" text="Decrypt" textFill="#f2f0f0" />
+                        <Button fx:id="btnDecrypt" layoutX="493.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #15d850#15d850;" text="Decrypt" textFill="#f2f0f0" />
                         <Button fx:id="btnAddFiles" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #58a6f4#58a6f4;" text="Add Files" textFill="#f5efef" />
-                        <Button fx:id="btnClearFiles" layoutX="97.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #ffe81e#ffe81e;" text="Clear Files" />
+                        <Button fx:id="btnClearFiles" layoutX="95.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #ffe81e#ffe81e;" text="Clear Files" />
                     </children>
                 </Pane>
                 <ListView fx:id="lvFiles" layoutX="25.0" layoutY="68.0" prefHeight="281.0" prefWidth="591.0" style="-fx-background-color: white;">

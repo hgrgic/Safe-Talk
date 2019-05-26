@@ -2,6 +2,7 @@ package io.safe.talk.gui.controller;
 
 
 import io.safe.talk.cli.controller.commands.SecurityBroker;
+import io.safe.talk.cli.controller.commands.SignatureBroker;
 import io.safe.talk.gui.util.AboutDialog;
 import io.safe.talk.gui.util.ConfirmationBox;
 import javafx.application.Platform;
@@ -13,7 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
-import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -28,6 +28,8 @@ public class HomeScreenController implements Initializable {
     public MenuItem miGenerateKeys;
     public MenuItem miQuit;
     public MenuItem miAbout;
+    public MenuItem miSign;
+    public MenuItem miVerifySig;
 
     private Map<String, File> listedFiles;
 
@@ -61,10 +63,7 @@ public class HomeScreenController implements Initializable {
                     }
                 });
 
-                HomeScreenController.this.lvFiles.getItems().clear();
-                HomeScreenController.this.listedFiles.clear();
                 ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
-
             }
         });
 
@@ -83,8 +82,6 @@ public class HomeScreenController implements Initializable {
                         }
                     });
 
-                    HomeScreenController.this.lvFiles.getItems().clear();
-                    HomeScreenController.this.listedFiles.clear();
                     ConfirmationBox.getSuccessBox("Files encrypted successfully!", sb.toString());
                 }
             }
@@ -119,6 +116,55 @@ public class HomeScreenController implements Initializable {
         miAbout.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 AboutDialog.getAboutDialog().show();
+            }
+        });
+
+        miSign.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                if(HomeScreenController.this.lvFiles.getItems().size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    SignatureBroker signatureBroker = new SignatureBroker();
+
+                    HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                        if (signatureBroker.digitallySignFile(listedFiles.get(item.toString()).getAbsolutePath())) {
+                            sb.append(String.format("%s signed\n", listedFiles.get(item.toString()).getName()));
+                        }
+                    });
+                    ConfirmationBox.getSuccessBox("Files signed successfully!", sb.toString());
+                } else {
+                    ConfirmationBox.getFailBox("No files added in the list!");
+                }
+            }
+        });
+
+        miVerifySig.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                if(HomeScreenController.this.lvFiles.getItems().size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    SignatureBroker signatureBroker = new SignatureBroker();
+                    FileChooser fileChooser = new FileChooser();
+
+                    fileChooser.setTitle("Select Public Key");
+                    File publicKey = fileChooser.showOpenDialog(null);
+
+                    if(publicKey != null){
+                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                            fileChooser.setTitle("Select Signature for " + item);
+                            File selectedSignature = fileChooser.showOpenDialog(null);
+
+                            if(selectedSignature != null){
+                                if (signatureBroker.verifyDigitalSignature(publicKey.getAbsolutePath(), selectedSignature.getAbsolutePath(), listedFiles.get(item.toString()).getAbsolutePath())) {
+                                    sb.append(String.format("%s verified\n", listedFiles.get(item.toString()).getName()));
+                                } else {
+                                    sb.append(String.format("%s not valid\n", listedFiles.get(item.toString()).getName()));
+                                }
+                            }
+                        });
+                        ConfirmationBox.getSuccessBox("Verification complete!", sb.toString());
+                    }
+                } else {
+                    ConfirmationBox.getFailBox("No files added in the list!");
+                }
             }
         });
     }
