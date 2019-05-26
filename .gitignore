@@ -30,4 +30,5 @@ STController/out/*
 /build
 /test
 ST-CLI/build
+ST-GUI/build
 STEncryption/build

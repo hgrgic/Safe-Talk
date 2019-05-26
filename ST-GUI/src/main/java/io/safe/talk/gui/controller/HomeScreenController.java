@@ -2,6 +2,8 @@ package io.safe.talk.gui.controller;
 
 
 import io.safe.talk.cli.controller.commands.SecurityBroker;
+import io.safe.talk.gui.util.AboutDialog;
+import io.safe.talk.gui.util.ConfirmationBox;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -22,9 +25,11 @@ public class HomeScreenController implements Initializable {
     public Button btnAddFiles;
     public Button btnDecrypt;
     public Button btnEncrypt;
+    public Button btnClearFiles;
     public ListView lvFiles;
     public MenuItem miGenerateKeys;
     public MenuItem miQuit;
+    public MenuItem miAbout;
 
     private Map<String, File> listedFiles;
 
@@ -54,6 +59,9 @@ public class HomeScreenController implements Initializable {
                 HomeScreenController.this.lvFiles.getItems().forEach(item -> {
                     securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath());
                 });
+
+                HomeScreenController.this.lvFiles.getItems().clear();
+                HomeScreenController.this.listedFiles.clear();
             }
         });
 
@@ -69,19 +77,40 @@ public class HomeScreenController implements Initializable {
                         securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(),
                                 selectedFile.getAbsolutePath());
                     });
+
+                    HomeScreenController.this.lvFiles.getItems().clear();
+                    HomeScreenController.this.listedFiles.clear();
                 }
+            }
+        });
+
+        btnClearFiles.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                HomeScreenController.this.lvFiles.getItems().clear();
+                HomeScreenController.this.listedFiles.clear();
             }
         });
 
         miGenerateKeys.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                new SecurityBroker().generateKeys();
+                boolean isGenerate = ConfirmationBox.getConfirmationBox("Are you sure you want to generate " +
+                        "new set of public / private keys? \nOld keys will be overwritten, and " +
+                        "files encrypted with previous keys will no longer be accessible!");
+                if(isGenerate){
+                    new SecurityBroker().generateKeys();
+                }
             }
         });
 
         miQuit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 Platform.exit();
+            }
+        });
+
+        miAbout.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                AboutDialog.getAboutDialog().show();
             }
         });
     }

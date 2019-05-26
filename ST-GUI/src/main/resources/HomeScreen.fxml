@@ -23,13 +23,12 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                        <MenuItem mnemonicParsing="false" text="Help" />
+                        <MenuItem fx:id="miAbout" mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: rgb(233,233,233);" VBox.vgrow="ALWAYS">
             <children>
                 <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
                     <font>
@@ -41,9 +40,14 @@
                         <Button fx:id="btnEncrypt" layoutX="567.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #f46241#f46241;" text="Encrypt" textFill="#f8f3f3" />
                         <Button fx:id="btnDecrypt" layoutX="486.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #15d850#15d850;" text="Decrypt" textFill="#f2f0f0" />
                         <Button fx:id="btnAddFiles" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #58a6f4#58a6f4;" text="Add Files" textFill="#f5efef" />
+                        <Button fx:id="btnClearFiles" layoutX="97.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #ffe81e#ffe81e;" text="Clear Files" />
                     </children>
                 </Pane>
-                <ListView fx:id="lvFiles" layoutY="62.0" prefHeight="310.0" prefWidth="640.0" />
+                <ListView fx:id="lvFiles" layoutX="25.0" layoutY="68.0" prefHeight="281.0" prefWidth="591.0" style="-fx-background-color: white;">
+                    <placeholder>
+                        <Label text="Add files to encrypt / decrypt" />
+                    </placeholder>
+                </ListView>
             </children>
         </AnchorPane>
     </children>
