@@ -19,12 +19,13 @@ public class DecryptCommand implements Securable{
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         try{
             OperationsLogger.getLogger().log(Level.INFO, "Decryption of file started");
             AESDecryption aesDecryption = new AESDecryption();
             aesDecryption.decryptFile(targetFilePath);
             OperationsLogger.getLogger().log(Level.INFO, "File decryption completed successfully");
+            return true;
 
         }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
             ErrorLogger.getLogger().log(Level.SEVERE, npe.getLocalizedMessage(), npe);
@@ -38,5 +39,6 @@ public class DecryptCommand implements Securable{
         }catch (Exception e){
             ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
+        return false;
     }
 }

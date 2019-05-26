@@ -20,13 +20,14 @@ public class EncryptCommand implements Securable {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         try{
             OperationsLogger.getLogger().log(Level.INFO, "Encryption of file started");
             AESEncryption aesEncryption = new AESEncryption();
             aesEncryption.createAESKey();
             aesEncryption.encryptFile(this.targetFilePath, this.publicKeyPath);
             OperationsLogger.getLogger().log(Level.INFO, "File encrypted successfully.");
+            return true;
 
         }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
             ErrorLogger.getLogger().log(Level.SEVERE, npe.getLocalizedMessage(), npe);
@@ -40,5 +41,6 @@ public class EncryptCommand implements Securable {
         }catch (Exception e){
             ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
+        return false;
     }
 }

@@ -13,7 +13,7 @@ import java.util.logging.Level;
 public class GenerateKeysCommand implements Securable {
 
     @Override
-    public void execute() {
+    public boolean execute() {
         OperationsLogger.getLogger().log(Level.INFO, "Keys generation started.");
         File homeRoot = new File(Encryptable.ROOT_KEY_LOCATION);
         if (!homeRoot.exists()) homeRoot.mkdirs();
@@ -25,11 +25,12 @@ public class GenerateKeysCommand implements Securable {
             gk.writeToFile(Encryptable.PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
             gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
             OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
+            return true;
 
         } catch (NoSuchAlgorithmException | IOException e) {
             ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
             OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
         }
-
+        return false;
     }
 }

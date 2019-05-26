@@ -2,17 +2,18 @@ package io.safe.talk.cli.controller.commands;
 
 public class SecurityBroker {
 
-    public void encryptFile(String targetFilePath, String publicKeyPath){
+    public boolean encryptFile(String targetFilePath, String publicKeyPath){
         EncryptCommand ec = new EncryptCommand(targetFilePath, publicKeyPath);
-        ec.execute();
+        return ec.execute();
     }
 
-    public void decryptFile(String targetFile){
+    public boolean decryptFile(String targetFile){
         DecryptCommand dc = new DecryptCommand(targetFile);
-        dc.execute();
+        return dc.execute();
     }
 
-    public void generateKeys(){
-        new GenerateKeysCommand().execute();
+    public boolean generateKeys(){
+        GenerateKeysCommand gkc = new GenerateKeysCommand();
+        return gkc.execute();
     }
 }
