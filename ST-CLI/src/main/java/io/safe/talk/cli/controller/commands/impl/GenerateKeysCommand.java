@@ -1,5 +1,6 @@
-package io.safe.talk.cli.controller.commands;
+package io.safe.talk.cli.controller.commands.impl;
 
+import io.safe.talk.cli.controller.commands.Securable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.Encryptable;

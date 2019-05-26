@@ -1,7 +1,7 @@
 package io.safe.talk.cli.controller.configuration;
 
-import io.safe.talk.cli.controller.commands.GenerateKeysCommand;
 import io.safe.talk.cli.controller.commands.SecurityBroker;
+import io.safe.talk.cli.controller.commands.SignatureBroker;
 import io.safe.talk.cli.controller.configuration.exceptions.ConflictingCommandsException;
 import io.safe.talk.cli.controller.configuration.exceptions.MissingCommandArgumentException;
 import io.safe.talk.cli.logger.ErrorLogger;
@@ -27,11 +27,16 @@ public class SystemBuilder {
                 new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
             } else if (cmd.hasOption('g')) {
                 new SecurityBroker().generateKeys();
+            } else if(cmd.hasOption('s')){
+                new SignatureBroker().digitallySignFile(cmd.getOptionValue('i'));
+            } else if(cmd.hasOption('v')){
+                new SignatureBroker().verifyDigitalSignature(cmd.getOptionValue("pk"),
+                        cmd.getOptionValue("pts"), cmd.getOptionValue('i'));
             }
 
         } catch (ConflictingCommandsException | MissingCommandArgumentException ce) {
             ErrorLogger.getLogger().log(Level.SEVERE, ce.getLocalizedMessage(), ce);
-            OperationsLogger.getLogger().log(Level.INFO, "Encryption failed.");
+            OperationsLogger.getLogger().log(Level.INFO, "Operation failed.");
         }
     }
 }

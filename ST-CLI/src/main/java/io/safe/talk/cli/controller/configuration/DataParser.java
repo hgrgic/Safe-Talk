@@ -13,7 +13,7 @@ import java.util.logging.Level;
 public interface DataParser {
 
     static void validatePrimaryCommands(CommandLine commandLine){
-        Character [] primaryTags =  {'e','g','d'};
+        Character [] primaryTags =  {'e','g','d', 's', 'v'};
         boolean primaryFound = false;
         for(char tag: primaryTags){
             if(commandLine.hasOption(tag) && !primaryFound){
@@ -29,6 +29,8 @@ public interface DataParser {
         relatedTagsMap.put("e", new String[]{"i","pk"});
         relatedTagsMap.put("d", new String[]{"i"});
         relatedTagsMap.put("g", new String[]{});
+        relatedTagsMap.put("v", new String[]{"pk", "pts", "i"});
+        relatedTagsMap.put("s", new String[]{"i"});
 
         for(Option option: commandLine.getOptions()){
             if(relatedTagsMap.containsKey(option.getOpt())){
@@ -48,8 +50,11 @@ public interface DataParser {
             options.addOption("i", true, "Pointer to the absolute path of the input file");
             options.addOption("e", false, "Mark that signifies encryption command");
             options.addOption("d", false, "Mark that signifies decryption command");
+            options.addOption("s", false, "Mark that signifies digitally sign command");
+            options.addOption("v", false, "Mark that signifies verify digital signature command");
             options.addOption("g", false, "Generate new set of personal public and private keys");
             options.addOption("pk", true, "Pointer to the encryption key");
+            options.addOption("pts", true, "Pointer to the digital signature file");
 
 
             CommandLineParser parser = new DefaultParser();

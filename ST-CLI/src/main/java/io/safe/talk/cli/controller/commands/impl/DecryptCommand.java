@@ -1,8 +1,9 @@
-package io.safe.talk.cli.controller.commands;
+package io.safe.talk.cli.controller.commands.impl;
 
+import io.safe.talk.cli.controller.commands.Securable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
-import io.safe.talk.encryption.process.aes.AESEncryption;
+import io.safe.talk.encryption.process.aes.AESDecryption;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -10,23 +11,21 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.logging.Level;
 
-public class EncryptCommand implements Securable {
-    private String targetFilePath;
-    private String publicKeyPath;
+public class DecryptCommand implements Securable {
 
-    public EncryptCommand(String targetFilePath, String publicKeyPath) {
+    private String targetFilePath;
+
+    public DecryptCommand(String targetFilePath) {
         this.targetFilePath = targetFilePath;
-        this.publicKeyPath = publicKeyPath;
     }
 
     @Override
     public boolean execute() {
         try{
-            OperationsLogger.getLogger().log(Level.INFO, "Encryption of file started");
-            AESEncryption aesEncryption = new AESEncryption();
-            aesEncryption.createAESKey();
-            aesEncryption.encryptFile(this.targetFilePath, this.publicKeyPath);
-            OperationsLogger.getLogger().log(Level.INFO, "File encrypted successfully.");
+            OperationsLogger.getLogger().log(Level.INFO, "Decryption of file started");
+            AESDecryption aesDecryption = new AESDecryption();
+            aesDecryption.decryptFile(targetFilePath);
+            OperationsLogger.getLogger().log(Level.INFO, "File decryption completed successfully");
             return true;
 
         }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
