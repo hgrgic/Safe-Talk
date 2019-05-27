@@ -24,11 +24,13 @@
 # Class files #
 *.class
 
-STController/out/*
 
 # Sonar #
 /build
 /test
+
+# Build #
 ST-CLI/build
 ST-GUI/build
 STEncryption/build
+*/out/*
