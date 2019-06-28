@@ -55,35 +55,43 @@ public class HomeScreenController implements Initializable {
 
         btnDecrypt.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                StringBuilder sb = new StringBuilder();
-                SecurityBroker securityBroker = new SecurityBroker();
+                if(HomeScreenController.this.lvFiles.getItems().size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    SecurityBroker securityBroker = new SecurityBroker();
 
-                HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                    if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
-                        sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
-                    }
-                });
+                    HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                        if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
+                            sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
+                        }
+                    });
 
-                ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
+                    ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
+                } else {
+                    ConfirmationBox.getFailBox("No files added in the list!");
+                }
             }
         });
 
         btnEncrypt.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                StringBuilder sb = new StringBuilder();
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Select Public Key");
-                File selectedFile = fileChooser.showOpenDialog(null);
+                if(HomeScreenController.this.lvFiles.getItems().size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Select Public Key");
+                    File selectedFile = fileChooser.showOpenDialog(null);
 
-                if(selectedFile != null){
-                    SecurityBroker securityBroker = new SecurityBroker();
-                    HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                        if (securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedFile.getAbsolutePath())) {
-                            sb.append(String.format("%s encrypted\n", listedFiles.get(item.toString()).getName()));
-                        }
-                    });
+                    if(selectedFile != null){
+                        SecurityBroker securityBroker = new SecurityBroker();
+                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                            if (securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedFile.getAbsolutePath())) {
+                                sb.append(String.format("%s encrypted\n", listedFiles.get(item.toString()).getName()));
+                            }
+                        });
 
-                    ConfirmationBox.getSuccessBox("Files encrypted successfully!", sb.toString());
+                        ConfirmationBox.getSuccessBox("Files encrypted successfully!", sb.toString());
+                    }
+                } else {
+                    ConfirmationBox.getFailBox("No files added in the list!");
                 }
             }
         });
@@ -145,23 +153,28 @@ public class HomeScreenController implements Initializable {
                     SignatureBroker signatureBroker = new SignatureBroker();
                     FileChooser fileChooser = new FileChooser();
 
+                    ConfirmationBox.getSuccessBox("", "Select Public Key");
                     fileChooser.setTitle("Select Public Key");
                     File publicKey = fileChooser.showOpenDialog(null);
 
                     if(publicKey != null){
                         HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                            ConfirmationBox.getSuccessBox("", "Select Signature for " + item);
                             fileChooser.setTitle("Select Signature for " + item);
                             File selectedSignature = fileChooser.showOpenDialog(null);
 
                             if(selectedSignature != null){
                                 if (signatureBroker.verifyDigitalSignature(publicKey.getAbsolutePath(), selectedSignature.getAbsolutePath(), listedFiles.get(item.toString()).getAbsolutePath())) {
                                     sb.append(String.format("%s verified\n", listedFiles.get(item.toString()).getName()));
+                                    ConfirmationBox.getSuccessBox("Success", sb.toString());
+                                    return;
                                 } else {
                                     sb.append(String.format("%s not valid\n", listedFiles.get(item.toString()).getName()));
+                                    ConfirmationBox.getFailBox(sb.toString());
+                                    return;
                                 }
                             }
                         });
-                        ConfirmationBox.getSuccessBox("Verification complete!", sb.toString());
                     }
                 } else {
                     ConfirmationBox.getFailBox("No files added in the list!");
