@@ -1,5 +1,5 @@
 package io.safe.talk.cli.controller.commands;
 
-public interface Securable {
+public interface Executable {
     boolean execute();
 }

@@ -1,6 +1,6 @@
 package io.safe.talk.cli.controller.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Securable;
+import io.safe.talk.cli.controller.commands.Executable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESEncryption;
@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.logging.Level;
 
-public class EncryptCommand implements Securable {
+public class EncryptCommand implements Executable {
     private String targetFilePath;
     private String publicKeyPath;
 

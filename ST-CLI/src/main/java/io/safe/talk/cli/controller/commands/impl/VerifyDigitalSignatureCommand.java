@@ -1,6 +1,6 @@
 package io.safe.talk.cli.controller.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Securable;
+import io.safe.talk.cli.controller.commands.Executable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.digital.signature.VerifierAgent;
 import io.safe.talk.encryption.process.rsa.RSAEncryption;
@@ -8,10 +8,9 @@ import io.safe.talk.encryption.process.rsa.RSAEncryption;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
 import java.util.logging.Level;
 
-public class VerifyDigitalSignatureCommand implements Securable {
+public class VerifyDigitalSignatureCommand implements Executable {
     private String publicKeyPath;
     private String pathToSignature;
     private String targetFilePath;

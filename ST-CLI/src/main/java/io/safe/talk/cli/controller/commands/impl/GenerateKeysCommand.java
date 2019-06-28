@@ -1,6 +1,6 @@
 package io.safe.talk.cli.controller.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Securable;
+import io.safe.talk.cli.controller.commands.Executable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.Encryptable;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
-public class GenerateKeysCommand implements Securable {
+public class GenerateKeysCommand implements Executable {
 
     @Override
     public boolean execute() {

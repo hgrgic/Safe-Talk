@@ -1,6 +1,6 @@
 package io.safe.talk.cli.controller.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Securable;
+import io.safe.talk.cli.controller.commands.Executable;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.digital.signature.SignatureAgent;
 import io.safe.talk.encryption.Encryptable;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.*;
 import java.util.logging.Level;
 
-public class DigitallySignCommand implements Securable {
+public class DigitallySignCommand implements Executable {
 
     private String targetFilePath;
     private String outputPath;

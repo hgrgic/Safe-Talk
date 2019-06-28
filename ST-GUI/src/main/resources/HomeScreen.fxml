@@ -17,7 +17,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="miSharePrivateKey" mnemonicParsing="false" text="Share Public Key" />
+                        <MenuItem fx:id="miSharePublicKey" mnemonicParsing="false" text="Share Public Key" />
                         <MenuItem fx:id="miGenerateKeys" mnemonicParsing="false" text="Generate Keys" />
                         <MenuItem fx:id="miQuit" mnemonicParsing="false" text="Quit" />
                     </items>

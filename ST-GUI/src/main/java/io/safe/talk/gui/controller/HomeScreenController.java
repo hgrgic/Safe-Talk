@@ -30,6 +30,7 @@ public class HomeScreenController implements Initializable {
     public MenuItem miAbout;
     public MenuItem miSign;
     public MenuItem miVerifySig;
+    public MenuItem miSharePublicKey;
 
     private Map<String, File> listedFiles;
 
@@ -164,6 +165,20 @@ public class HomeScreenController implements Initializable {
                     }
                 } else {
                     ConfirmationBox.getFailBox("No files added in the list!");
+                }
+            }
+        });
+
+        miSharePublicKey.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                SecurityBroker securityBroker = new SecurityBroker();
+                boolean copied = securityBroker.sharePublicKey();
+                if(copied){
+                    ConfirmationBox.getSuccessBox("Copy success", "Public key successfully copied to clipboard!");
+                } else {
+                    ConfirmationBox.getFailBox("Public key could not be copied.");
                 }
             }
         });
