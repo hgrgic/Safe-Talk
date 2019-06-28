@@ -3,8 +3,9 @@ package io.safe.talk.gui.controller;
 
 import io.safe.talk.cli.controller.commands.SecurityBroker;
 import io.safe.talk.cli.controller.commands.SignatureBroker;
-import io.safe.talk.gui.util.AboutDialog;
-import io.safe.talk.gui.util.ConfirmationBox;
+import io.safe.talk.gui.dialogs.AboutDialog;
+import io.safe.talk.gui.dialogs.ConfirmationBox;
+import io.safe.talk.gui.dialogs.ContactImportDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +32,7 @@ public class HomeScreenController implements Initializable {
     public MenuItem miSign;
     public MenuItem miVerifySig;
     public MenuItem miSharePublicKey;
+    public MenuItem miImportContact;
 
     private Map<String, File> listedFiles;
 
@@ -183,7 +185,6 @@ public class HomeScreenController implements Initializable {
         });
 
         miSharePublicKey.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 SecurityBroker securityBroker = new SecurityBroker();
@@ -192,6 +193,23 @@ public class HomeScreenController implements Initializable {
                     ConfirmationBox.getSuccessBox("Copy success", "Public key successfully copied to clipboard!");
                 } else {
                     ConfirmationBox.getFailBox("Public key could not be copied.");
+                }
+            }
+        });
+
+        miImportContact.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ContactImportDialog contactImportDialog = new ContactImportDialog();
+                ContactImportDialog.ImportDataWrapper data = contactImportDialog.createImportContactDialog();
+                if(data != null){
+                    SecurityBroker securityBroker = new SecurityBroker();
+                    boolean imported = securityBroker.importContact(data.getPathToPublicKey(), data.getContactName());
+                    if(imported){
+                        ConfirmationBox.getSuccessBox("Success", "Contact imported!");
+                    } else {
+                        ConfirmationBox.getFailBox("Contact could not be imported!");
+                    }
                 }
             }
         });

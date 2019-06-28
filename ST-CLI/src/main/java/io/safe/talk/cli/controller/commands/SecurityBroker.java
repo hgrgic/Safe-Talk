@@ -3,6 +3,7 @@ package io.safe.talk.cli.controller.commands;
 import io.safe.talk.cli.controller.commands.impl.DecryptCommand;
 import io.safe.talk.cli.controller.commands.impl.EncryptCommand;
 import io.safe.talk.cli.controller.commands.impl.GenerateKeysCommand;
+import io.safe.talk.cli.controller.commands.impl.ImportContactCommand;
 import io.safe.talk.cli.controller.commands.impl.SharePublicKeyCommand;
 
 public class SecurityBroker {
@@ -12,8 +13,8 @@ public class SecurityBroker {
         return ec.execute();
     }
 
-    public boolean decryptFile(String targetFile){
-        DecryptCommand dc = new DecryptCommand(targetFile);
+    public boolean decryptFile(String targetFilePath){
+        DecryptCommand dc = new DecryptCommand(targetFilePath);
         return dc.execute();
     }
 
@@ -25,5 +26,10 @@ public class SecurityBroker {
     public boolean sharePublicKey(){
         SharePublicKeyCommand spkc = new SharePublicKeyCommand();
         return spkc.execute();
+    }
+
+    public boolean importContact(String publicKeyFilePath, String contactName) {
+        ImportContactCommand icc = new ImportContactCommand(publicKeyFilePath, contactName);
+        return icc.execute();
     }
 }

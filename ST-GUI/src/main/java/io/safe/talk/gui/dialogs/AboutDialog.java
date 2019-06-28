@@ -1,4 +1,4 @@
-package io.safe.talk.gui.util;
+package io.safe.talk.gui.dialogs;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
