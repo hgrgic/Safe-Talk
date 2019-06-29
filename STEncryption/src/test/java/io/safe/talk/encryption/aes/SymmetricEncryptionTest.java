@@ -5,7 +5,6 @@ import io.safe.talk.encryption.process.aes.AESDecryption;
 import io.safe.talk.encryption.process.aes.AESEncryption;
 import org.junit.Test;
 
-
 public class SymmetricEncryptionTest {
 
     @Test

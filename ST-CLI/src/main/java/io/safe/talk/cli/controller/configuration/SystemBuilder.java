@@ -27,11 +27,11 @@ public class SystemBuilder {
                 new SecurityBroker().decryptFile(cmd.getOptionValue('i'));
             } else if (cmd.hasOption('g')) {
                 new SecurityBroker().generateKeys();
-            } else if(cmd.hasOption('s')){
+            } else if (cmd.hasOption('s')) {
                 new SignatureBroker().digitallySignFile(cmd.getOptionValue('i'));
-            } else if(cmd.hasOption('v')){
+            } else if (cmd.hasOption('v')) {
                 new SignatureBroker().verifyDigitalSignature(cmd.getOptionValue("pk"),
-                        cmd.getOptionValue("pts"), cmd.getOptionValue('i'));
+                                                             cmd.getOptionValue("pts"), cmd.getOptionValue('i'));
             }
 
         } catch (ConflictingCommandsException | MissingCommandArgumentException ce) {

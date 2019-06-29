@@ -4,7 +4,15 @@ import io.safe.talk.cli.controller.configuration.exceptions.ConflictingCommandsE
 import io.safe.talk.cli.controller.configuration.exceptions.MissingCommandArgumentException;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.MissingArgumentException;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.UnrecognizedOptionException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,30 +20,30 @@ import java.util.logging.Level;
 
 public interface DataParser {
 
-    static void validatePrimaryCommands(CommandLine commandLine){
-        Character [] primaryTags =  {'e','g','d', 's', 'v'};
+    static void validatePrimaryCommands(CommandLine commandLine) {
+        Character[] primaryTags = {'e', 'g', 'd', 's', 'v'};
         boolean primaryFound = false;
-        for(char tag: primaryTags){
-            if(commandLine.hasOption(tag) && !primaryFound){
+        for (char tag : primaryTags) {
+            if (commandLine.hasOption(tag) && !primaryFound) {
                 primaryFound = true;
-            }else if(commandLine.hasOption(tag) && primaryFound){
+            } else if (commandLine.hasOption(tag) && primaryFound) {
                 throw new ConflictingCommandsException();
             }
         }
     }
 
-    static void validateSecondaryCommands(CommandLine commandLine){
-        Map<String, String[]> relatedTagsMap =  new HashMap<>();
-        relatedTagsMap.put("e", new String[]{"i","pk"});
+    static void validateSecondaryCommands(CommandLine commandLine) {
+        Map<String, String[]> relatedTagsMap = new HashMap<>();
+        relatedTagsMap.put("e", new String[]{"i", "pk"});
         relatedTagsMap.put("d", new String[]{"i"});
         relatedTagsMap.put("g", new String[]{});
         relatedTagsMap.put("v", new String[]{"pk", "pts", "i"});
         relatedTagsMap.put("s", new String[]{"i"});
 
-        for(Option option: commandLine.getOptions()){
-            if(relatedTagsMap.containsKey(option.getOpt())){
-                for(String relatedOptions: relatedTagsMap.get(option.getOpt())){
-                    if(!commandLine.hasOption(relatedOptions)){
+        for (Option option : commandLine.getOptions()) {
+            if (relatedTagsMap.containsKey(option.getOpt())) {
+                for (String relatedOptions : relatedTagsMap.get(option.getOpt())) {
+                    if (!commandLine.hasOption(relatedOptions)) {
                         throw new MissingCommandArgumentException(relatedOptions);
                     }
                 }
@@ -43,10 +51,10 @@ public interface DataParser {
         }
     }
 
-    static CommandLine parseArgs(String [] args){
+    static CommandLine parseArgs(String[] args) {
         try {
             Options options = new Options();
-            options.addOption("h","help", false, "Help instructions");
+            options.addOption("h", "help", false, "Help instructions");
             options.addOption("i", true, "Pointer to the absolute path of the input file");
             options.addOption("e", false, "Mark that signifies encryption command");
             options.addOption("d", false, "Mark that signifies decryption command");
@@ -60,16 +68,15 @@ public interface DataParser {
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
 
-            if (cmd.hasOption("h")){
+            if (cmd.hasOption("h")) {
                 HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp( "Safe Talk Command Line Applications", options);
+                formatter.printHelp("Safe Talk Command Line Applications", options);
                 return null;
-            }else {
+            } else {
                 return cmd;
             }
 
-        }
-        catch (UnrecognizedOptionException | MissingArgumentException uoe){
+        } catch (UnrecognizedOptionException | MissingArgumentException uoe) {
             OperationsLogger.getLogger().log(Level.INFO, "For a complete list of available commands run -h or --help");
             ErrorLogger.getLogger().log(Level.WARNING, uoe.getLocalizedMessage(), uoe);
             return null;

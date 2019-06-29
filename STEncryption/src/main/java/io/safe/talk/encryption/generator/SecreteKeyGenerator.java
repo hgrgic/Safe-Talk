@@ -2,15 +2,20 @@ package io.safe.talk.encryption.generator;
 
 import io.safe.talk.encryption.Encryptable;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.*;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 
-public class SecreteKeyGenerator{
+public class SecreteKeyGenerator {
     private KeyPairGenerator keyGen;
     private KeyGenerator kgen;
 
@@ -41,7 +46,7 @@ public class SecreteKeyGenerator{
     public void createAESKey() {
         this.secretKey = this.kgen.generateKey();
 
-        this.iv = new byte[128/8];
+        this.iv = new byte[128 / 8];
         this.srandom.nextBytes(iv);
         this.ivspec = new IvParameterSpec(iv);
     }
@@ -49,12 +54,11 @@ public class SecreteKeyGenerator{
     public void writeToFile(String path, byte[] key) throws IOException {
         File f = new File(path);
         f.getParentFile().mkdirs();
-        try(FileOutputStream fos = new FileOutputStream(f)){
+        try (FileOutputStream fos = new FileOutputStream(f)) {
             fos.write(key);
             fos.flush();
         }
     }
-
 
     public IvParameterSpec getIvspec() {
         return ivspec;

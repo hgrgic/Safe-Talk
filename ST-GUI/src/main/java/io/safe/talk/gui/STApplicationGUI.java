@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class STApplicationGUI extends Application {
 
@@ -17,11 +17,11 @@ public class STApplicationGUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(this.getClass().getClassLoader().getResource("HomeScreen.fxml"));
 
-        if(System.getProperty("os.name").contains("Mac")){
+        if (System.getProperty("os.name").contains("Mac")) {
             URL iconURL = STApplicationGUI.class.getResource("/media/logo.png");
             java.awt.Image image = new ImageIcon(iconURL).getImage();
             com.apple.eawt.Application.getApplication().setDockIconImage(image);
-        } else{
+        } else {
             Image stfLogo = new Image(this.getClass().getClassLoader().getResource("media/logo.png").toString());
             primaryStage.getIcons().add(stfLogo);
         }

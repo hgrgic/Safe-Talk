@@ -17,7 +17,7 @@ public class ErrorLogger {
     private ErrorLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
         File logDir = new File(FileManipulationUtility.pathBuilder(Encryptable.ROOT_KEY_LOCATION, "logs"));
-        if(!logDir.exists()){
+        if (!logDir.exists()) {
             logDir.mkdirs();
         }
 
@@ -34,7 +34,7 @@ public class ErrorLogger {
                 configured = true;
                 new ErrorLogger();
             }
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
         }
         return logger;

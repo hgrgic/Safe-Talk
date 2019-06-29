@@ -1,7 +1,9 @@
 package io.safe.talk.cli.controller.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Securable;
-import io.safe.talk.cli.logger.ErrorLogger;
+import io.safe.talk.cli.controller.commands.Executable;
+import io.safe.talk.cli.exceptions.CriticalCommandException;
+import io.safe.talk.cli.exceptions.EncryptionException;
+import io.safe.talk.cli.exceptions.FileManipulationException;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESEncryption;
 
@@ -11,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.logging.Level;
 
-public class EncryptCommand implements Securable {
+public class EncryptCommand implements Executable {
     private String targetFilePath;
     private String publicKeyPath;
 
@@ -22,7 +24,7 @@ public class EncryptCommand implements Securable {
 
     @Override
     public boolean execute() {
-        try{
+        try {
             OperationsLogger.getLogger().log(Level.INFO, "Encryption of file started");
             AESEncryption aesEncryption = new AESEncryption();
             aesEncryption.createAESKey();
@@ -30,18 +32,17 @@ public class EncryptCommand implements Securable {
             OperationsLogger.getLogger().log(Level.INFO, "File encrypted successfully.");
             return true;
 
-        }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
-            ErrorLogger.getLogger().log(Level.SEVERE, npe.getLocalizedMessage(), npe);
+        } catch (NoSuchProviderException | NoSuchAlgorithmException npe) {
+            throw new EncryptionException("There has been a problem with the encryption process", npe);
 
-        }catch (GeneralSecurityException gse){
-            ErrorLogger.getLogger().log(Level.SEVERE, gse.getLocalizedMessage(), gse);
+        } catch (GeneralSecurityException gse) {
+            throw new SecurityException("General security exception has occurred at encryption.", gse);
 
-        }catch (IOException ioe){
-            ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
+        } catch (IOException ioe) {
+            throw new FileManipulationException("Necessary encryption files could not be access!", ioe);
 
-        }catch (Exception e){
-            ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            throw new CriticalCommandException("General exception occurred!", e);
         }
-        return false;
     }
 }

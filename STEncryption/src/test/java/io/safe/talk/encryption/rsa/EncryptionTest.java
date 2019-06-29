@@ -4,7 +4,6 @@ import io.safe.talk.encryption.process.rsa.RSADecryption;
 import io.safe.talk.encryption.process.rsa.RSAEncryption;
 import org.junit.Test;
 
-import java.io.File;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -19,13 +18,12 @@ public class EncryptionTest {
         String msg = "Cryptography is fun!";
         String encrypted_msg = ac.encryptText(msg, publicKey);
         System.out.println("Original Message: " + msg +
-                "\nEncrypted Message: " + encrypted_msg +
-                "\nEnc Length: " + encrypted_msg.length());
+                               "\nEncrypted Message: " + encrypted_msg +
+                               "\nEnc Length: " + encrypted_msg.length());
     }
 
-    
     @Test
-    public void testAsymmetricDecryption() throws Exception{
+    public void testAsymmetricDecryption() throws Exception {
 
         RSAEncryption ac = new RSAEncryption();
         RSADecryption dc = new RSADecryption();
@@ -38,8 +36,8 @@ public class EncryptionTest {
         String encrypted_msg = ac.encryptText(msg, publicKey);
         String decrypted_msg = dc.decryptText(encrypted_msg, privateKey);
         System.out.println("Original Message: " + msg +
-                "\nEncrypted Message: " + encrypted_msg +
-                "\nEnc Length: " + encrypted_msg.length()
-                + "\nDecrypted Message: " + decrypted_msg);
+                               "\nEncrypted Message: " + encrypted_msg +
+                               "\nEnc Length: " + encrypted_msg.length()
+                               + "\nDecrypted Message: " + decrypted_msg);
     }
 }
