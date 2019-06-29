@@ -35,4 +35,12 @@ public class ConfirmationBox {
         alert.setHeaderText(msg);
         alert.showAndWait();
     }
+
+    public static void getFailBox(String header, String msg){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }

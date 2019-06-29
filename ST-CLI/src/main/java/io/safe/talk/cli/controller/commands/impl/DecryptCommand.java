@@ -1,6 +1,9 @@
 package io.safe.talk.cli.controller.commands.impl;
 
 import io.safe.talk.cli.controller.commands.Executable;
+import io.safe.talk.cli.exceptions.CriticalCommandException;
+import io.safe.talk.cli.exceptions.EncryptionException;
+import io.safe.talk.cli.exceptions.FileManipulationException;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESDecryption;
@@ -29,17 +32,16 @@ public class DecryptCommand implements Executable {
             return true;
 
         }catch (NoSuchProviderException | NoSuchAlgorithmException npe){
-            ErrorLogger.getLogger().log(Level.SEVERE, npe.getLocalizedMessage(), npe);
+            throw new EncryptionException("There has been a problem with the decryption process", npe);
 
         }catch (GeneralSecurityException gse){
-            ErrorLogger.getLogger().log(Level.SEVERE, gse.getLocalizedMessage(), gse);
+            throw new SecurityException("General security exception has occurred.", gse);
 
         }catch (IOException ioe){
-            ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
+            throw new FileManipulationException("Necessary decryption files could not be access!", ioe);
 
         }catch (Exception e){
-            ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
+            throw new CriticalCommandException("General exception occurred!", e);
         }
-        return false;
     }
 }

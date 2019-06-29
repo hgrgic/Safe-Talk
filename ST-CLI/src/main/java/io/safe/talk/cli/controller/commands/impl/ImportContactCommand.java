@@ -1,11 +1,14 @@
 package io.safe.talk.cli.controller.commands.impl;
 
 import io.safe.talk.cli.controller.commands.Executable;
+import io.safe.talk.cli.exceptions.FileManipulationException;
+import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.util.FileManipulationUtility;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public class ImportContactCommand implements Executable {
     private String pathToPublicKey;
@@ -22,11 +25,10 @@ public class ImportContactCommand implements Executable {
         File contactPublicKey = new File(pathToPublicKey);
         try {
             FileManipulationUtility.copyToDir(destinationContactDirectoryPath, contactPublicKey);
+            OperationsLogger.getLogger().log(Level.INFO, "Contact import successfully finished.");
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
-            //TODO: log exception
-            return false;
+            throw new FileManipulationException("Destination file not accessible", e);
         }
     }
 }

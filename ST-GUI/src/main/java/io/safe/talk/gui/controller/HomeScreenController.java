@@ -3,6 +3,10 @@ package io.safe.talk.gui.controller;
 
 import io.safe.talk.cli.controller.commands.SecurityBroker;
 import io.safe.talk.cli.controller.commands.SignatureBroker;
+import io.safe.talk.cli.exceptions.CriticalCommandException;
+import io.safe.talk.cli.exceptions.DestinationDirectoryException;
+import io.safe.talk.cli.exceptions.FileManipulationException;
+import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;
 import io.safe.talk.gui.dialogs.ContactImportDialog;
@@ -18,7 +22,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-
+import java.util.logging.Level;
 
 public class HomeScreenController implements Initializable {
     public Button btnAddFiles;
@@ -60,12 +64,21 @@ public class HomeScreenController implements Initializable {
                 if(HomeScreenController.this.lvFiles.getItems().size() > 0) {
                     StringBuilder sb = new StringBuilder();
                     SecurityBroker securityBroker = new SecurityBroker();
-
-                    HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                        if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
-                            sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
-                        }
-                    });
+                    try{
+                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                            try{
+                                if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
+                                    sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
+                                }
+                            } catch (CriticalCommandException cce){
+                                throw cce;
+                            }
+                        });
+                    } catch (Exception e) {
+                        ErrorLogger.getLogger().log(Level.SEVERE, "Decryption failed", e);
+                        ConfirmationBox.getFailBox("Decryption failed!", e.getLocalizedMessage());
+                        return;
+                    }
 
                     ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
                 } else {
@@ -84,12 +97,21 @@ public class HomeScreenController implements Initializable {
 
                     if(selectedFile != null){
                         SecurityBroker securityBroker = new SecurityBroker();
-                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                            if (securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedFile.getAbsolutePath())) {
-                                sb.append(String.format("%s encrypted\n", listedFiles.get(item.toString()).getName()));
-                            }
-                        });
-
+                        try{
+                            HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                                try{
+                                    if (securityBroker.encryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedFile.getAbsolutePath())) {
+                                        sb.append(String.format("%s encrypted\n", listedFiles.get(item.toString()).getName()));
+                                    }
+                                } catch (CriticalCommandException cce){
+                                    throw cce;
+                                }
+                            });
+                        } catch (Exception e) {
+                            ErrorLogger.getLogger().log(Level.SEVERE, "Encryption failed", e);
+                            ConfirmationBox.getFailBox("Encryption failed!", e.getLocalizedMessage());
+                            return;
+                        }
                         ConfirmationBox.getSuccessBox("Files encrypted successfully!", sb.toString());
                     }
                 } else {
@@ -111,8 +133,14 @@ public class HomeScreenController implements Initializable {
                         "new set of public / private keys? \nOld keys will be overwritten, and " +
                         "files encrypted with previous keys will no longer be accessible!");
                 if(isGenerate){
-                    if (new SecurityBroker().generateKeys()) {
-                        ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                    try{
+                        if (new SecurityBroker().generateKeys()) {
+                            ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                        }
+                    } catch (CriticalCommandException e) {
+                        ErrorLogger.getLogger().log(Level.SEVERE, "Key generation failed", e);
+                        ConfirmationBox.getFailBox("Security keys could be generated!");
+                        return;
                     }
                 }
             }
@@ -187,13 +215,15 @@ public class HomeScreenController implements Initializable {
         miSharePublicKey.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SecurityBroker securityBroker = new SecurityBroker();
-                boolean copied = securityBroker.sharePublicKey();
-                if(copied){
-                    ConfirmationBox.getSuccessBox("Copy success", "Public key successfully copied to clipboard!");
-                } else {
-                    ConfirmationBox.getFailBox("Public key could not be copied.");
+                try {
+                    SecurityBroker securityBroker = new SecurityBroker();
+                    securityBroker.sharePublicKey();
+                    ConfirmationBox.getSuccessBox("Copy success!", "Public key successfully copied to clipboard!");
+                } catch (DestinationDirectoryException e) {
+                    ConfirmationBox.getFailBox("Share key failed!", e.getLocalizedMessage());
                 }
+
+
             }
         });
 
@@ -203,13 +233,14 @@ public class HomeScreenController implements Initializable {
                 ContactImportDialog contactImportDialog = new ContactImportDialog();
                 ContactImportDialog.ImportDataWrapper data = contactImportDialog.createImportContactDialog();
                 if(data != null){
-                    SecurityBroker securityBroker = new SecurityBroker();
-                    boolean imported = securityBroker.importContact(data.getPathToPublicKey(), data.getContactName());
-                    if(imported){
+                    try{
+                        SecurityBroker securityBroker = new SecurityBroker();
+                        securityBroker.importContact(data.getPathToPublicKey(), data.getContactName());
                         ConfirmationBox.getSuccessBox("Success", "Contact imported!");
-                    } else {
-                        ConfirmationBox.getFailBox("Contact could not be imported!");
+                    } catch (FileManipulationException e) {
+                        ConfirmationBox.getFailBox("Contact import failed!", e.getLocalizedMessage());
                     }
+
                 }
             }
         });

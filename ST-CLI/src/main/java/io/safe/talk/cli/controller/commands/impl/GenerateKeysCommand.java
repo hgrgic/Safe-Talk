@@ -1,6 +1,8 @@
 package io.safe.talk.cli.controller.commands.impl;
 
 import io.safe.talk.cli.controller.commands.Executable;
+import io.safe.talk.cli.exceptions.EncryptionException;
+import io.safe.talk.cli.exceptions.FileManipulationException;
 import io.safe.talk.cli.logger.ErrorLogger;
 import io.safe.talk.cli.logger.OperationsLogger;
 import io.safe.talk.encryption.Encryptable;
@@ -28,10 +30,11 @@ public class GenerateKeysCommand implements Executable {
             OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
             return true;
 
-        } catch (NoSuchAlgorithmException | IOException e) {
-            ErrorLogger.getLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
-            OperationsLogger.getLogger().log(Level.INFO, "Keys generation failed.");
+        } catch (NoSuchAlgorithmException noAlgo) {
+            throw new EncryptionException("There has been a problem with algorithm at key generation process", noAlgo);
+
+        } catch (IOException ioe){
+            throw new FileManipulationException("Necessary system files could not be access!", ioe);
         }
-        return false;
     }
 }

@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 
 public class GeneratorTest {
 
