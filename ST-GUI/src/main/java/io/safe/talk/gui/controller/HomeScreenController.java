@@ -6,6 +6,7 @@ import io.safe.talk.cli.exceptions.CriticalCommandException;
 import io.safe.talk.cli.exceptions.DestinationDirectoryException;
 import io.safe.talk.cli.exceptions.FileManipulationException;
 import io.safe.talk.cli.logger.ErrorLogger;
+import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;
 import io.safe.talk.gui.dialogs.ContactImportDialog;
@@ -50,6 +51,7 @@ public class HomeScreenController implements Initializable {
         btnAddFiles.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setTitle("Select File");
 
                 File selectedFile = fileChooser.showOpenDialog(null);
@@ -94,6 +96,9 @@ public class HomeScreenController implements Initializable {
                     StringBuilder sb = new StringBuilder();
                     FileChooser fileChooser = new FileChooser();
                     fileChooser.setTitle("Select Public Key");
+                    File contactsFile = new File(Encryptable.CONTACTS_LOCATION);
+                    if(contactsFile.exists()) fileChooser.setInitialDirectory(contactsFile);
+
                     File selectedFile = fileChooser.showOpenDialog(null);
 
                     if (selectedFile != null) {
@@ -186,11 +191,14 @@ public class HomeScreenController implements Initializable {
 
                     ConfirmationBox.getSuccessBox("", "Select Public Key");
                     fileChooser.setTitle("Select Public Key");
+                    File contactsFile = new File(Encryptable.CONTACTS_LOCATION);
+                    if(contactsFile.exists()) fileChooser.setInitialDirectory(contactsFile);
                     File publicKey = fileChooser.showOpenDialog(null);
 
                     if (publicKey != null) {
                         HomeScreenController.this.lvFiles.getItems().forEach(item -> {
                             ConfirmationBox.getSuccessBox("", "Select Signature for " + item);
+                            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
                             fileChooser.setTitle("Select Signature for " + item);
                             File selectedSignature = fileChooser.showOpenDialog(null);
 
