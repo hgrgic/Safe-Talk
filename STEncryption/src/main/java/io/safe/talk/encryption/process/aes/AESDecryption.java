@@ -4,17 +4,15 @@ import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.encryption.process.EncryptionHelper;
 import io.safe.talk.encryption.process.rsa.RSADecryption;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class AESDecryption extends EncryptionHelper {
-
 
     public void decryptFile(String inputFile) throws IOException, GeneralSecurityException {
         try (FileInputStream in = new FileInputStream(inputFile)) {
@@ -25,13 +23,13 @@ public class AESDecryption extends EncryptionHelper {
 
 
             byte[] b = new byte[256];
-            if(in.read(b) > 0){
+            if (in.read(b) > 0) {
                 byte[] keyb = cipher.doFinal(b);
                 skey = new SecretKeySpec(keyb, "AES");
 
 
                 byte[] iv = new byte[128 / 8];
-                if(in.read(iv) > 0){
+                if (in.read(iv) > 0) {
                     IvParameterSpec ivspec = new IvParameterSpec(iv);
 
                     Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");

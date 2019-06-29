@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public class FileManipulationUtility {
 
-    private FileManipulationUtility(){}
+    private FileManipulationUtility() {
+    }
 
     public static void moveToDir(String path, boolean createDir, File... files) throws IOException {
 

@@ -1,6 +1,6 @@
 package io.safe.talk.cli.exceptions;
 
-public class FileManipulationException extends  CriticalCommandException{
+public class FileManipulationException extends CriticalCommandException {
     public FileManipulationException(String message) {
         super(message);
     }

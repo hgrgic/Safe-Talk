@@ -1,12 +1,12 @@
 package io.safe.talk.signature;
 
+import static junit.framework.TestCase.assertTrue;
+
 import io.safe.talk.digital.signature.SignatureAgent;
 import io.safe.talk.encryption.process.rsa.RSADecryption;
 import org.junit.Test;
 
 import java.security.PrivateKey;
-
-import static junit.framework.TestCase.assertTrue;
 
 public class SignatureProcedureTest {
 
@@ -17,8 +17,8 @@ public class SignatureProcedureTest {
 
         SignatureAgent signatureAgent = new SignatureAgent();
         signatureAgent.execute(privateKey, "/Users/HrvojeGrgic/Desktop/Enc/text.txt",
-                "/Users/HrvojeGrgic/Desktop/Enc/signature");
+                               "/Users/HrvojeGrgic/Desktop/Enc/signature");
 
-        assertTrue (true);
+        assertTrue(true);
     }
 }

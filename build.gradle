@@ -34,13 +34,13 @@ subprojects {
     }
 }
 
-project(':ST-CLI'){
-    dependencies{
+project(':ST-CLI') {
+    dependencies {
         compile project(':STEncryption')
         compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
     }
 
-    jar{
+    jar {
         manifest {
             attributes "Main-Class": "io.safe.talk.cli.STApplicationCLI"
         }
@@ -51,12 +51,12 @@ project(':ST-CLI'){
     }
 }
 
-project(':ST-GUI'){
+project(':ST-GUI') {
     dependencies {
         compile project(':ST-CLI')
         compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
     }
-    jar{
+    jar {
         manifest {
             attributes "Main-Class": "io.safe.talk.gui.STApplicationGUI"
         }

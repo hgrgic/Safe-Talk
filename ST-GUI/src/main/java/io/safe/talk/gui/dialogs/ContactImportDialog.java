@@ -7,14 +7,14 @@ import java.util.Optional;
 
 public class ContactImportDialog {
 
-    public ImportDataWrapper createImportContactDialog(){
+    public ImportDataWrapper createImportContactDialog() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Contact Alias");
         dialog.setHeaderText("Create new contact");
         dialog.setContentText("Please enter contact alias/name:");
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
+        if (result.isPresent()) {
             ConfirmationBox.getSuccessBox("Public Key", "Select public key for " + result.get());
             FileChooser fileChooser = new FileChooser();
             String pathToPublicKey = fileChooser.showOpenDialog(null).getAbsolutePath();
@@ -25,7 +25,7 @@ public class ContactImportDialog {
         //TODO: throw custom exception
     }
 
-    public class ImportDataWrapper{
+    public class ImportDataWrapper {
         private String contactName;
         private String pathToPublicKey;
 

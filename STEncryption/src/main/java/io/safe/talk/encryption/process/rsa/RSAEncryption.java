@@ -3,20 +3,25 @@ package io.safe.talk.encryption.process.rsa;
 import io.safe.talk.encryption.process.EncryptionHelper;
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
-import java.nio.file.Files;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 
 public class RSAEncryption extends EncryptionHelper {
     private Cipher cipher;
 
-    public RSAEncryption(Cipher cipher){
+    public RSAEncryption(Cipher cipher) {
         super();
         this.cipher = cipher;
     }
@@ -32,7 +37,6 @@ public class RSAEncryption extends EncryptionHelper {
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return kf.generatePublic(spec);
     }
-
 
     public String encryptText(String msg, PublicKey key) throws UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         this.cipher.init(Cipher.ENCRYPT_MODE, key);

@@ -6,21 +6,21 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 public class ConfirmationBox {
-    public static boolean getConfirmationBox(String msg){
+    public static boolean getConfirmationBox(String msg) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm your choice");
         alert.setHeaderText(null);
         alert.setContentText(msg);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             return true;
         }
 
         return false;
     }
 
-    public static void getSuccessBox(String header, String msg){
+    public static void getSuccessBox(String header, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
         alert.setHeaderText(header);
@@ -29,14 +29,14 @@ public class ConfirmationBox {
         alert.showAndWait();
     }
 
-    public static void getFailBox(String msg){
+    public static void getFailBox(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(msg);
         alert.showAndWait();
     }
 
-    public static void getFailBox(String header, String msg){
+    public static void getFailBox(String header, String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(header);

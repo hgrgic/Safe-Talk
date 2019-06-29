@@ -26,7 +26,7 @@ public class SecurityBroker {
         return gkc.execute();
     }
 
-    public boolean sharePublicKey() throws DestinationDirectoryException{
+    public boolean sharePublicKey() throws DestinationDirectoryException {
         SharePublicKeyCommand spkc = new SharePublicKeyCommand();
         return spkc.execute();
     }

@@ -10,7 +10,7 @@ import javafx.stage.StageStyle;
 
 public class AboutDialog {
 
-    public static Stage getAboutDialog(){
+    public static Stage getAboutDialog() {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Safe Talk - About");
@@ -25,12 +25,12 @@ public class AboutDialog {
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(
-                aboutIcon,
-                new javafx.scene.control.Label("Safe Talk - Encryption Utility App"),
-                new javafx.scene.control.Label("Ver. 1.0")
+            aboutIcon,
+            new javafx.scene.control.Label("Safe Talk - Encryption Utility App"),
+            new javafx.scene.control.Label("Ver. 1.0")
         );
 
-        Scene scene = new Scene(layout,250,200);
+        Scene scene = new Scene(layout, 250, 200);
         dialog.setScene(scene);
 
         return dialog;

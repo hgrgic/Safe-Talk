@@ -3,9 +3,14 @@ package io.safe.talk.digital.signature;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
 
-public class VerifierAgent{
+public class VerifierAgent {
     private Signature rsa;
 
     public VerifierAgent() throws NoSuchProviderException, NoSuchAlgorithmException {
@@ -17,7 +22,7 @@ public class VerifierAgent{
     }
 
     private byte[] loadSignature(String pathToSig) throws IOException {
-        try(FileInputStream sigfis = new FileInputStream(pathToSig)){
+        try (FileInputStream sigfis = new FileInputStream(pathToSig)) {
             byte[] sigToVerify = new byte[sigfis.available()];
             sigfis.read(sigToVerify);
 
@@ -25,8 +30,8 @@ public class VerifierAgent{
         }
     }
 
-    private boolean verifySignature(String pathToData, byte [] sigToVerify) throws IOException, SignatureException {
-        try(FileInputStream datafis = new FileInputStream(pathToData); BufferedInputStream bufin = new BufferedInputStream(datafis)){
+    private boolean verifySignature(String pathToData, byte[] sigToVerify) throws IOException, SignatureException {
+        try (FileInputStream datafis = new FileInputStream(pathToData); BufferedInputStream bufin = new BufferedInputStream(datafis)) {
             byte[] buffer = new byte[1024];
             int len;
             while (bufin.available() != 0) {
