@@ -1,4 +1,4 @@
-package io.safe.talk.cli.controller.configuration.exceptions;
+package io.safe.talk.cli.exceptions;
 
 public class ConflictingCommandsException extends RuntimeException {
     public ConflictingCommandsException() {
