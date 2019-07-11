@@ -21,9 +21,9 @@ public class DigitallySignCommand implements Executable {
     private String targetFilePath;
     private String outputPath;
 
-    public DigitallySignCommand(String targetFilePath, String outputPath) {
+    public DigitallySignCommand(String targetFilePath) {
         this.targetFilePath = targetFilePath;
-        this.outputPath = outputPath;
+        this.outputPath = targetFilePath + ".sig";
     }
 
     @Override

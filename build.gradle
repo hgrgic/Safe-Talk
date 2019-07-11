@@ -34,26 +34,16 @@ subprojects {
     }
 }
 
-project(':ST-CLI') {
+project(':SafeTalkCore') {
     dependencies {
         compile project(':STEncryption')
         compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
-    }
-
-    jar {
-        manifest {
-            attributes "Main-Class": "io.safe.talk.cli.STApplicationCLI"
-        }
-
-        from {
-            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-        }
     }
 }
 
 project(':ST-GUI') {
     dependencies {
-        compile project(':ST-CLI')
+        compile project(':SafeTalkCore')
         compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
     }
     jar {

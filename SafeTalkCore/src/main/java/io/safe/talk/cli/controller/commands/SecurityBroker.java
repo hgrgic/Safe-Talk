@@ -17,22 +17,22 @@ public class SecurityBroker {
     }
 
     public boolean decryptFile(String targetFilePath) throws CriticalCommandException {
-        DecryptCommand dc = new DecryptCommand(targetFilePath);
-        return dc.execute();
+        Executable executableCommand = new DecryptCommand(targetFilePath);
+        return executableCommand.execute();
     }
 
     public boolean generateKeys() throws CriticalCommandException {
-        GenerateKeysCommand gkc = new GenerateKeysCommand();
-        return gkc.execute();
+        Executable executableCommand = new GenerateKeysCommand();
+        return executableCommand.execute();
     }
 
     public boolean sharePublicKey() throws DestinationDirectoryException {
-        SharePublicKeyCommand spkc = new SharePublicKeyCommand();
-        return spkc.execute();
+        Executable executableCommand = new SharePublicKeyCommand();
+        return executableCommand.execute();
     }
 
     public boolean importContact(String publicKeyFilePath, String contactName) throws FileManipulationException {
-        ImportContactCommand icc = new ImportContactCommand(publicKeyFilePath, contactName);
-        return icc.execute();
+        Executable executableCommand = new ImportContactCommand(publicKeyFilePath, contactName);
+        return executableCommand.execute();
     }
 }

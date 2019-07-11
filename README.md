@@ -19,5 +19,7 @@ Logs are currently generated in the directory where your .jar file is located.
 
 Code quality validated by SonarCloud.
 
+./gradlew sonarqube -Dsonar.projectKey=hgrgic_Safe-Talk -Dsonar.organization=hgrgic-github  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3170423324459fd6bcb5dd6811d47140a176586d
+
 
 
