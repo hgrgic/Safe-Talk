@@ -26,8 +26,8 @@ public class GenerateKeysCommand implements Executable {
         try {
             gk = new SecreteKeyGenerator();
             gk.createRSAKeys();
-            gk.writeToFile(Encryptable.PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
-            gk.writeToFile(Encryptable.PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
+            gk.writeToFile(Encryptable.DEFAULT_PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
+            gk.writeToFile(Encryptable.DEFAULT_PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
             OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
             return true;
 

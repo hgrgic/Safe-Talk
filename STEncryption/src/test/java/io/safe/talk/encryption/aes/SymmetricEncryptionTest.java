@@ -11,7 +11,7 @@ public class SymmetricEncryptionTest {
     public void testSymmetricEnc() throws Exception {
         AESEncryption se = new AESEncryption();
         se.createAESKey();
-        se.encryptFile("/Users/HrvojeGrgic/Desktop/image.png", Encryptable.PUBLIC_KEY_LOCATION);
+        se.encryptFile("/Users/HrvojeGrgic/Desktop/image.png", Encryptable.DEFAULT_PUBLIC_KEY_LOCATION);
     }
 
     @Test

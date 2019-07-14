@@ -16,7 +16,7 @@ public class SharePublicKeyCommand implements Executable {
 
     @Override
     public boolean execute() {
-        File publicKey = new File(Encryptable.PUBLIC_KEY_LOCATION);
+        File publicKey = new File(Encryptable.DEFAULT_PUBLIC_KEY_LOCATION);
 
         if (publicKey.exists()) {
             List filesToCopy = new ArrayList();

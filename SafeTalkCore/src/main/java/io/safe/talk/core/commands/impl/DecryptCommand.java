@@ -25,7 +25,7 @@ public class DecryptCommand implements Executable {
      */
     public DecryptCommand(String targetFilePath) {
         this.targetFilePath = targetFilePath;
-        this.privateKeyLocation = Encryptable.PRIVATE_KEY_LOCATION;
+        this.privateKeyLocation = Encryptable.DEFAULT_PRIVATE_KEY_LOCATION;
     }
 
     /**

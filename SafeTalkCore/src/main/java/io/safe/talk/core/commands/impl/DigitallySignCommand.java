@@ -30,7 +30,7 @@ public class DigitallySignCommand implements Executable {
     public boolean execute() {
         try {
             RSADecryption dc = new RSADecryption();
-            PrivateKey privateKey = dc.getPrivate(Encryptable.PRIVATE_KEY_LOCATION);
+            PrivateKey privateKey = dc.getPrivate(Encryptable.DEFAULT_PRIVATE_KEY_LOCATION);
             SignatureAgent signatureAgent = new SignatureAgent();
             signatureAgent.execute(privateKey, this.targetFilePath, this.outputPath);
             return true;
