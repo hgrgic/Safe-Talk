@@ -1,7 +1,7 @@
-package io.safe.talk.cli.controller.commands.impl;
+package io.safe.talk.core.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Executable;
-import io.safe.talk.cli.logger.ErrorLogger;
+import io.safe.talk.core.commands.Executable;
+import io.safe.talk.core.logger.ErrorLogger;
 import io.safe.talk.digital.signature.VerifierAgent;
 import io.safe.talk.encryption.process.rsa.RSAEncryption;
 

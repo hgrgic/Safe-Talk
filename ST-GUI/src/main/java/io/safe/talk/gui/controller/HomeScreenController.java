@@ -1,11 +1,11 @@
 package io.safe.talk.gui.controller;
 
-import io.safe.talk.cli.controller.commands.SecurityBroker;
-import io.safe.talk.cli.controller.commands.SignatureBroker;
-import io.safe.talk.cli.exceptions.CriticalCommandException;
-import io.safe.talk.cli.exceptions.DestinationDirectoryException;
-import io.safe.talk.cli.exceptions.FileManipulationException;
-import io.safe.talk.cli.logger.ErrorLogger;
+import io.safe.talk.core.commands.SecurityBroker;
+import io.safe.talk.core.commands.SignatureBroker;
+import io.safe.talk.core.exceptions.CriticalCommandException;
+import io.safe.talk.core.exceptions.DestinationDirectoryException;
+import io.safe.talk.core.exceptions.FileManipulationException;
+import io.safe.talk.core.logger.ErrorLogger;
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;

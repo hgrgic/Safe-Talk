@@ -1,10 +1,10 @@
-package io.safe.talk.cli.controller.commands.impl;
+package io.safe.talk.core.commands.impl;
 
-import io.safe.talk.cli.controller.commands.Executable;
-import io.safe.talk.cli.exceptions.CriticalCommandException;
-import io.safe.talk.cli.exceptions.EncryptionException;
-import io.safe.talk.cli.exceptions.FileManipulationException;
-import io.safe.talk.cli.logger.OperationsLogger;
+import io.safe.talk.core.commands.Executable;
+import io.safe.talk.core.exceptions.CriticalCommandException;
+import io.safe.talk.core.exceptions.EncryptionException;
+import io.safe.talk.core.exceptions.FileManipulationException;
+import io.safe.talk.core.logger.OperationsLogger;
 import io.safe.talk.encryption.process.aes.AESEncryption;
 
 import java.io.IOException;

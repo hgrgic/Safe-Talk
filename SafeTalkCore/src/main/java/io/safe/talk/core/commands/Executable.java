@@ -1,4 +1,4 @@
-package io.safe.talk.cli.controller.commands;
+package io.safe.talk.core.commands;
 
 public interface Executable {
     boolean execute();

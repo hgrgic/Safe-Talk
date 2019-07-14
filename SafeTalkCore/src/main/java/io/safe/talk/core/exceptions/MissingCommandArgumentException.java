@@ -1,4 +1,4 @@
-package io.safe.talk.cli.exceptions;
+package io.safe.talk.core.exceptions;
 
 public class MissingCommandArgumentException extends RuntimeException {
     public MissingCommandArgumentException(String whichArgument) {

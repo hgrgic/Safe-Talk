@@ -1,7 +1,7 @@
-package io.safe.talk.cli.controller.commands;
+package io.safe.talk.core.commands;
 
-import io.safe.talk.cli.controller.commands.impl.DigitallySignCommand;
-import io.safe.talk.cli.controller.commands.impl.VerifyDigitalSignatureCommand;
+import io.safe.talk.core.commands.impl.VerifyDigitalSignatureCommand;
+import io.safe.talk.core.commands.impl.DigitallySignCommand;
 
 public class SignatureBroker {
 

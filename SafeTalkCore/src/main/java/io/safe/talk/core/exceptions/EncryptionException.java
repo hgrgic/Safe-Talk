@@ -1,4 +1,4 @@
-package io.safe.talk.cli.exceptions;
+package io.safe.talk.core.exceptions;
 
 public class EncryptionException extends SecurityException {
     public EncryptionException(String message, Throwable cause) {

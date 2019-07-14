@@ -1,4 +1,4 @@
-package io.safe.talk.cli.logger;
+package io.safe.talk.core.logger;
 
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.util.FileManipulationUtility;
@@ -10,19 +10,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class OperationsLogger {
-    private static Logger logger = Logger.getLogger("OperationsLog");
+public class ErrorLogger {
+    private static Logger logger = Logger.getLogger("ErrorLog");
     private static boolean configured;
 
-    private OperationsLogger() throws IOException {
+    private ErrorLogger() throws IOException {
         SimpleFormatter formatter = new SimpleFormatter();
         File logDir = new File(FileManipulationUtility.pathBuilder(Encryptable.ROOT_KEY_LOCATION, "logs"));
         if (!logDir.exists()) {
             logDir.mkdirs();
         }
-        FileHandler fh = new FileHandler(FileManipulationUtility.pathBuilder(logDir.getPath(), "operations.log"), true);
-        fh.setFormatter(formatter);
 
+        FileHandler fh = new FileHandler(FileManipulationUtility.pathBuilder(logDir.getPath(), "error.log"), true);
+        fh.setFormatter(formatter);
 
         logger.setUseParentHandlers(true);
         logger.addHandler(fh);
@@ -32,12 +32,11 @@ public class OperationsLogger {
         try {
             if (!configured) {
                 configured = true;
-                new OperationsLogger();
+                new ErrorLogger();
             }
         } catch (IOException ioe) {
             ErrorLogger.getLogger().log(Level.SEVERE, ioe.getLocalizedMessage(), ioe);
         }
-
         return logger;
     }
 }

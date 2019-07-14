@@ -30,7 +30,7 @@
 /test
 
 # Build #
-ST-CLI/build
+SafeTalkCore/build
 ST-GUI/build
-STEncryption/build
+SafeTalkCore/build
 */out/*

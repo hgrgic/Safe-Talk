@@ -1,13 +1,13 @@
-package io.safe.talk.cli.controller.commands;
+package io.safe.talk.core.commands;
 
-import io.safe.talk.cli.controller.commands.impl.DecryptCommand;
-import io.safe.talk.cli.controller.commands.impl.EncryptCommand;
-import io.safe.talk.cli.controller.commands.impl.GenerateKeysCommand;
-import io.safe.talk.cli.controller.commands.impl.ImportContactCommand;
-import io.safe.talk.cli.controller.commands.impl.SharePublicKeyCommand;
-import io.safe.talk.cli.exceptions.CriticalCommandException;
-import io.safe.talk.cli.exceptions.DestinationDirectoryException;
-import io.safe.talk.cli.exceptions.FileManipulationException;
+import io.safe.talk.core.commands.impl.DecryptCommand;
+import io.safe.talk.core.commands.impl.EncryptCommand;
+import io.safe.talk.core.commands.impl.ImportContactCommand;
+import io.safe.talk.core.commands.impl.GenerateKeysCommand;
+import io.safe.talk.core.commands.impl.SharePublicKeyCommand;
+import io.safe.talk.core.exceptions.CriticalCommandException;
+import io.safe.talk.core.exceptions.DestinationDirectoryException;
+import io.safe.talk.core.exceptions.FileManipulationException;
 
 public class SecurityBroker {
 
