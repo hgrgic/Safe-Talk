@@ -6,17 +6,16 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 public class ConfirmationBox {
-    public static boolean getConfirmationBox(String msg) {
+    public static boolean getConfirmationBox(String msg, String headerTxt) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm your choice");
-        alert.setHeaderText(null);
+        alert.setHeaderText(headerTxt);
         alert.setContentText(msg);
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             return true;
         }
-
         return false;
     }
 

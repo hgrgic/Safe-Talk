@@ -1,4 +1,4 @@
-package io.safe.talk.core.commands.impl;
+package io.safe.talk.core.commands.impl.signature;
 
 import io.safe.talk.core.commands.Executable;
 import io.safe.talk.core.logger.ErrorLogger;

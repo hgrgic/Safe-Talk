@@ -1,10 +1,11 @@
 package io.safe.talk.core.commands;
 
-import io.safe.talk.core.commands.impl.DecryptCommand;
-import io.safe.talk.core.commands.impl.EncryptCommand;
-import io.safe.talk.core.commands.impl.ImportContactCommand;
-import io.safe.talk.core.commands.impl.GenerateKeysCommand;
-import io.safe.talk.core.commands.impl.SharePublicKeyCommand;
+import io.safe.talk.core.commands.impl.encryption.DecryptCommand;
+import io.safe.talk.core.commands.impl.encryption.EncryptCommand;
+import io.safe.talk.core.commands.impl.contacts.ImportContactCommand;
+import io.safe.talk.core.commands.impl.keys.GenerateKeysCommand;
+import io.safe.talk.core.commands.impl.keys.InspectSecureKeyLocation;
+import io.safe.talk.core.commands.impl.keys.SharePublicKeyCommand;
 import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.DestinationDirectoryException;
 import io.safe.talk.core.exceptions.FileManipulationException;
@@ -18,6 +19,11 @@ public class SecurityBroker {
 
     public boolean decryptFile(String targetFilePath) throws CriticalCommandException {
         Executable executableCommand = new DecryptCommand(targetFilePath);
+        return executableCommand.execute();
+    }
+
+    public boolean inspectKeysLocation() throws CriticalCommandException {
+        Executable executableCommand = new InspectSecureKeyLocation();
         return executableCommand.execute();
     }
 

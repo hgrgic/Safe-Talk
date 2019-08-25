@@ -136,14 +136,26 @@ public class HomeScreenController implements Initializable {
         miGenerateKeys.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 boolean isGenerate = ConfirmationBox.getConfirmationBox("Are you sure you want to generate " +
-                                                                            "new set of public / private keys? \nOld keys will be overwritten, and " +
-                                                                            "files encrypted with previous keys will no longer be accessible!");
+                                                                            "new set of public / private keys?", "");
                 if (isGenerate) {
+                    SecurityBroker securityBroker = new SecurityBroker();
                     try {
-                        if (new SecurityBroker().generateKeys()) {
-                            ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                        if(securityBroker.inspectKeysLocation()){
+                            if (securityBroker.generateKeys()) {
+                                ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                            }
                         }
-                    } catch (CriticalCommandException e) {
+
+                    } catch (FileManipulationException fileAlreadyExists){
+                        boolean overrideGenerateWarning = ConfirmationBox.getConfirmationBox("Old keys will be overwritten, and files encrypted with previous keys will no longer be accessible!",
+                                                                                     fileAlreadyExists.getLocalizedMessage());
+                        if(overrideGenerateWarning){
+                            if (securityBroker.generateKeys()) {
+                                ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
+                            }
+                        }
+                    }
+                    catch (CriticalCommandException e) {
                         ErrorLogger.getLogger().log(Level.SEVERE, "Key generation failed", e);
                         ConfirmationBox.getFailBox("Security keys could be generated!");
                         return;
@@ -151,6 +163,7 @@ public class HomeScreenController implements Initializable {
                 }
             }
         });
+//
 
         miQuit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {

@@ -1,7 +1,7 @@
 package io.safe.talk.core.commands;
 
-import io.safe.talk.core.commands.impl.VerifyDigitalSignatureCommand;
-import io.safe.talk.core.commands.impl.DigitallySignCommand;
+import io.safe.talk.core.commands.impl.signature.VerifyDigitalSignatureCommand;
+import io.safe.talk.core.commands.impl.signature.DigitallySignCommand;
 
 public class SignatureBroker {
 

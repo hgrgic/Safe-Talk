@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import io.safe.talk.core.commands.Executable;
+import io.safe.talk.core.commands.impl.encryption.DecryptCommand;
+import io.safe.talk.core.commands.impl.encryption.EncryptCommand;
 import org.junit.Test;
 
 import java.io.File;
@@ -25,7 +27,7 @@ public class DecryptCommandTest {
             assertTrue(encryptedFileCreatedByTest.exists());
 
             Executable decryptionCommand = new DecryptCommand(encryptedFileCreatedByTest.getAbsolutePath(),
-                                                             testPrivateKey.getAbsolutePath());
+                                                              testPrivateKey.getAbsolutePath());
 
             assertTrue(decryptionCommand.execute());
             assertTrue(encryptedFileCreatedByTest.delete());

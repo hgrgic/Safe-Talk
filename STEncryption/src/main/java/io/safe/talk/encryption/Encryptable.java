@@ -2,7 +2,7 @@ package io.safe.talk.encryption;
 
 import io.safe.talk.util.FileManipulationUtility;
 
-public class Encryptable {
+public final class Encryptable {
 
     private Encryptable() {
     }

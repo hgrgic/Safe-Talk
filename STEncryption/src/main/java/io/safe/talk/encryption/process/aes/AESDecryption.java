@@ -16,7 +16,7 @@ public class AESDecryption extends EncryptionHelper {
 
     public void decryptFile(String inputFile, String privateKeyLocation) throws IOException, GeneralSecurityException {
         try (FileInputStream in = new FileInputStream(inputFile)) {
-            SecretKeySpec skey = null;
+            SecretKeySpec skey;
 
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, new RSADecryption().getPrivate(privateKeyLocation));

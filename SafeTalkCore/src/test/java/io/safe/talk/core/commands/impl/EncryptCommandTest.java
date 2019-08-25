@@ -3,6 +3,7 @@ package io.safe.talk.core.commands.impl;
 import static org.junit.Assert.*;
 
 import io.safe.talk.core.commands.Executable;
+import io.safe.talk.core.commands.impl.encryption.EncryptCommand;
 import org.junit.Test;
 
 import java.io.File;
