@@ -1,6 +1,5 @@
 package io.safe.talk.encryption.process.aes;
 
-import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.encryption.process.EncryptionHelper;
 import io.safe.talk.encryption.process.rsa.RSADecryption;
 
