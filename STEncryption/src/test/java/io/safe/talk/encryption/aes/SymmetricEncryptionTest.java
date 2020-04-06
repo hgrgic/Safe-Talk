@@ -17,6 +17,6 @@ public class SymmetricEncryptionTest {
     @Test
     public void testSymmetricDec() throws Exception {
         AESDecryption sd = new AESDecryption();
-        sd.decryptFile("/Users/HrvojeGrgic/Desktop/image.png.enc");
+        sd.decryptFile("/Users/HrvojeGrgic/Desktop/image.png.enc", Encryptable.DEFAULT_PRIVATE_KEY_LOCATION);
     }
 }

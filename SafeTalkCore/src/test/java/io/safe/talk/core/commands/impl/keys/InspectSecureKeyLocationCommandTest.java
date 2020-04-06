@@ -8,6 +8,6 @@ public class InspectSecureKeyLocationCommandTest {
 
     @Test
     public void execute() {
-        assertTrue(new InspectSecureKeyLocationCommand().execute());
+        assertTrue(new InspectSecureKeyLocationCommand("<some-location-tbd>").execute());
     }
 }

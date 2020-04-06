@@ -17,8 +17,8 @@ public class SecurityBroker {
         return ec.execute();
     }
 
-    public boolean decryptFile(String targetFilePath) throws CriticalCommandException {
-        Executable executableCommand = new DecryptCommand(targetFilePath);
+    public boolean decryptFile(String targetFilePath, String keyName) throws CriticalCommandException {
+        Executable executableCommand = new DecryptCommand(targetFilePath, keyName);
         return executableCommand.execute();
     }
 

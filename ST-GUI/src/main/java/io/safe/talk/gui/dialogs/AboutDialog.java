@@ -27,7 +27,7 @@ public class AboutDialog {
         layout.getChildren().addAll(
             aboutIcon,
             new javafx.scene.control.Label("Safe Talk - Encryption Utility App"),
-            new javafx.scene.control.Label("Ver. 1.0 | cli-to-core beta")
+            new javafx.scene.control.Label("Ver. 1.1 | cli-to-core beta")
         );
 
         Scene scene = new Scene(layout, 250, 200);

@@ -12,6 +12,7 @@ public final class Encryptable {
     public static final String DEFAULT_PUBLIC_KEY_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", "public.key");
     public static final String DEFAULT_PRIVATE_KEY_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", "private.key");
     public static final String CONTACTS_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "contacts");
+    public static final String PERSONAL_KEY_LOCATIONS = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal");
 
     public static final int RSA_LENGTH = 2048;
     public static final int AES_LENGTH = 256;

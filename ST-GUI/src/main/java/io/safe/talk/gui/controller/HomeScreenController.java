@@ -6,11 +6,13 @@ import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.DestinationDirectoryException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.ErrorLogger;
+import io.safe.talk.core.service.KeyService;
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;
 import io.safe.talk.gui.dialogs.ContactImportDialog;
-import io.safe.talk.gui.dialogs.KeyGenerationDialog;
+import io.safe.talk.gui.dialogs.simple.SimpleChoiceSelectDialog;
+import io.safe.talk.gui.dialogs.simple.SimpleTextInputDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -68,16 +70,23 @@ public class HomeScreenController implements Initializable {
                 if (HomeScreenController.this.lvFiles.getItems().size() > 0) {
                     StringBuilder sb = new StringBuilder();
                     SecurityBroker securityBroker = new SecurityBroker();
+
+                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                    String selectedKey = choiceSelectDialog.createDialog("Key Selection",
+                                                                         "Select Private Key",
+                                                                         "Private keys:", KeyService.listPrivateKeyDirectories());
                     try {
-                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                            try {
-                                if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath())) {
-                                    sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
+                        if(selectedKey != null){
+                            HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                                try {
+                                    if (securityBroker.decryptFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedKey)) {
+                                        sb.append(String.format("%s decrypted\n", listedFiles.get(item.toString()).getName()));
+                                    }
+                                } catch (CriticalCommandException cce) {
+                                    throw cce;
                                 }
-                            } catch (CriticalCommandException cce) {
-                                throw cce;
-                            }
-                        });
+                            });
+                        }
                     } catch (Exception e) {
                         ErrorLogger.getLogger().log(Level.SEVERE, "Decryption failed", e);
                         ConfirmationBox.getFailBox("Decryption failed!", e.getLocalizedMessage());
@@ -136,14 +145,16 @@ public class HomeScreenController implements Initializable {
 
         miGenerateKeys.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                KeyGenerationDialog keyGenerationDialog = new KeyGenerationDialog();
-                KeyGenerationDialog.ImportDataWrapper data = keyGenerationDialog.createDialog();
+                SimpleTextInputDialog keyGenerationDialog = new SimpleTextInputDialog();
+                String data = keyGenerationDialog.createDialog("Key Creation Dialog",
+                                                               "Create new key-pair",
+                                                               "Key-pair name:");
 
                 if (data != null) {
                     SecurityBroker securityBroker = new SecurityBroker();
                     try {
-                        if(securityBroker.inspectKeysLocation(data.getKeyLocation())){
-                            if (securityBroker.generateKeys(data.getKeyLocation())) {
+                        if(securityBroker.inspectKeysLocation(data)){
+                            if (securityBroker.generateKeys(data)) {
                                 ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
                             }
                         }
@@ -152,7 +163,7 @@ public class HomeScreenController implements Initializable {
                         boolean overrideGenerateWarning = ConfirmationBox.getConfirmationBox("Old keys will be overwritten, and files encrypted with previous keys will no longer be accessible!",
                                                                                      fileAlreadyExists.getLocalizedMessage());
                         if(overrideGenerateWarning){
-                            if (securityBroker.generateKeys(data.getKeyLocation())) {
+                            if (securityBroker.generateKeys(data)) {
                                 ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
                             }
                         }
