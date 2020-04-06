@@ -32,8 +32,8 @@ public class SecurityBroker {
         return executableCommand.execute();
     }
 
-    public boolean sharePublicKey() throws DestinationDirectoryException {
-        Executable executableCommand = new SharePublicKeyCommand();
+    public boolean sharePublicKey(String keyName) throws DestinationDirectoryException {
+        Executable executableCommand = new SharePublicKeyCommand(keyName);
         return executableCommand.execute();
     }
 

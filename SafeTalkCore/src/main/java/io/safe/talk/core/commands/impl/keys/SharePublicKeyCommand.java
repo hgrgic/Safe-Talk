@@ -13,10 +13,15 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class SharePublicKeyCommand implements Executable {
+    private String keyName;
+
+    public SharePublicKeyCommand(String keyName){
+        this.keyName = keyName;
+    }
 
     @Override
     public boolean execute() {
-        File publicKey = new File(Encryptable.DEFAULT_PUBLIC_KEY_LOCATION);
+        File publicKey = new File(Encryptable.generateCustomPublicKeyLocation(this.keyName));
 
         if (publicKey.exists()) {
             List filesToCopy = new ArrayList();

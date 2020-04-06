@@ -250,9 +250,15 @@ public class HomeScreenController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    SecurityBroker securityBroker = new SecurityBroker();
-                    securityBroker.sharePublicKey();
-                    ConfirmationBox.getSuccessBox("Copy success!", "Public key successfully copied to clipboard!");
+                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                    String selectedKey = choiceSelectDialog.createDialog("Key Selection",
+                                                                         "Select Private Key",
+                                                                         "Private keys:", KeyService.listPrivateKeyDirectories());
+                    if(selectedKey != null){
+                        SecurityBroker securityBroker = new SecurityBroker();
+                        securityBroker.sharePublicKey(selectedKey);
+                        ConfirmationBox.getSuccessBox("Copy success!", "Public key successfully copied to clipboard!");
+                    }
                 } catch (DestinationDirectoryException e) {
                     ConfirmationBox.getFailBox("Share key failed!", e.getLocalizedMessage());
                 }
