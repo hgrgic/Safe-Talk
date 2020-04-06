@@ -10,6 +10,7 @@ import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;
 import io.safe.talk.gui.dialogs.ContactImportDialog;
+import io.safe.talk.gui.dialogs.KeyGenerationDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -135,13 +136,14 @@ public class HomeScreenController implements Initializable {
 
         miGenerateKeys.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                boolean isGenerate = ConfirmationBox.getConfirmationBox("Are you sure you want to generate " +
-                                                                            "new set of public / private keys?", "");
-                if (isGenerate) {
+                KeyGenerationDialog keyGenerationDialog = new KeyGenerationDialog();
+                KeyGenerationDialog.ImportDataWrapper data = keyGenerationDialog.createDialog();
+
+                if (data != null) {
                     SecurityBroker securityBroker = new SecurityBroker();
                     try {
-                        if(securityBroker.inspectKeysLocation()){
-                            if (securityBroker.generateKeys()) {
+                        if(securityBroker.inspectKeysLocation(data.getKeyLocation())){
+                            if (securityBroker.generateKeys(data.getKeyLocation())) {
                                 ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
                             }
                         }
@@ -150,7 +152,7 @@ public class HomeScreenController implements Initializable {
                         boolean overrideGenerateWarning = ConfirmationBox.getConfirmationBox("Old keys will be overwritten, and files encrypted with previous keys will no longer be accessible!",
                                                                                      fileAlreadyExists.getLocalizedMessage());
                         if(overrideGenerateWarning){
-                            if (securityBroker.generateKeys()) {
+                            if (securityBroker.generateKeys(data.getKeyLocation())) {
                                 ConfirmationBox.getSuccessBox("Keys generated successfully!", null);
                             }
                         }
@@ -163,7 +165,6 @@ public class HomeScreenController implements Initializable {
                 }
             }
         });
-//
 
         miQuit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {

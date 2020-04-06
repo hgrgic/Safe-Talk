@@ -6,6 +6,7 @@ import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.OperationsLogger;
 import io.safe.talk.encryption.Encryptable;
 import io.safe.talk.encryption.generator.SecreteKeyGenerator;
+import io.safe.talk.exceptions.KeyGenerationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
 public class GenerateKeysCommand implements Executable {
+    private String keyName;
+
+    public GenerateKeysCommand(){}
+
+    public GenerateKeysCommand(String keyName){
+        this.keyName = keyName;
+    }
 
     @Override
     public boolean execute() {
@@ -26,16 +34,16 @@ public class GenerateKeysCommand implements Executable {
         try {
             gk = new SecreteKeyGenerator();
             gk.createRSAKeys();
-            gk.writeToFile(Encryptable.DEFAULT_PUBLIC_KEY_LOCATION, gk.getPublicKey().getEncoded());
-            gk.writeToFile(Encryptable.DEFAULT_PRIVATE_KEY_LOCATION, gk.getPrivateKey().getEncoded());
+            gk.writeToFile(Encryptable.generateCustomPublicKeyLocation(this.keyName), gk.getPublicKey().getEncoded());
+            gk.writeToFile(Encryptable.generateCustomPrivateKeyLocation(this.keyName), gk.getPrivateKey().getEncoded());
             OperationsLogger.getLogger().log(Level.INFO, "Keys generation successfully finished.");
             return true;
 
-        } catch (NoSuchAlgorithmException noAlgo) {
+        } catch (NoSuchAlgorithmException | KeyGenerationException noAlgo) {
             throw new EncryptionException("There has been a problem with algorithm at key generation process", noAlgo);
 
         } catch (IOException ioe) {
-            throw new FileManipulationException("Necessary system files could not be access!", ioe);
+            throw new FileManipulationException("Necessary system files could not be accessed!", ioe);
         }
     }
 }

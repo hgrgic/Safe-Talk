@@ -4,7 +4,7 @@ import io.safe.talk.core.commands.impl.encryption.DecryptCommand;
 import io.safe.talk.core.commands.impl.encryption.EncryptCommand;
 import io.safe.talk.core.commands.impl.contacts.ImportContactCommand;
 import io.safe.talk.core.commands.impl.keys.GenerateKeysCommand;
-import io.safe.talk.core.commands.impl.keys.InspectSecureKeyLocation;
+import io.safe.talk.core.commands.impl.keys.InspectSecureKeyLocationCommand;
 import io.safe.talk.core.commands.impl.keys.SharePublicKeyCommand;
 import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.DestinationDirectoryException;
@@ -22,13 +22,13 @@ public class SecurityBroker {
         return executableCommand.execute();
     }
 
-    public boolean inspectKeysLocation() throws CriticalCommandException {
-        Executable executableCommand = new InspectSecureKeyLocation();
+    public boolean inspectKeysLocation(String keyName) throws CriticalCommandException {
+        Executable executableCommand = new InspectSecureKeyLocationCommand(keyName);
         return executableCommand.execute();
     }
 
-    public boolean generateKeys() throws CriticalCommandException {
-        Executable executableCommand = new GenerateKeysCommand();
+    public boolean generateKeys(String keyName) throws CriticalCommandException {
+        Executable executableCommand = new GenerateKeysCommand(keyName);
         return executableCommand.execute();
     }
 

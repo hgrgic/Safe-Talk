@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class InspectSecureKeyLocationTest {
+public class InspectSecureKeyLocationCommandTest {
 
     @Test
     public void execute() {
-        assertTrue(new InspectSecureKeyLocation().execute());
+        assertTrue(new InspectSecureKeyLocationCommand().execute());
     }
 }

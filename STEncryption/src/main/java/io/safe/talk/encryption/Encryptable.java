@@ -1,5 +1,6 @@
 package io.safe.talk.encryption;
 
+import io.safe.talk.exceptions.KeyGenerationException;
 import io.safe.talk.util.FileManipulationUtility;
 
 public final class Encryptable {
@@ -14,4 +15,20 @@ public final class Encryptable {
 
     public static final int RSA_LENGTH = 2048;
     public static final int AES_LENGTH = 256;
+
+    public static String generateCustomPublicKeyLocation(String keyName) {
+        if (keyName.trim().length() > 0) {
+            return FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", keyName, "public.key");
+        }
+
+        throw new KeyGenerationException("Key name cannot be empty");
+    }
+
+    public static String generateCustomPrivateKeyLocation(String keyName) {
+        if (keyName.trim().length() > 0) {
+            return FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", keyName, "private.key");
+        }
+
+        throw new KeyGenerationException("Key name cannot be empty");
+    }
 }
