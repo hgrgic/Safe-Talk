@@ -192,15 +192,22 @@ public class HomeScreenController implements Initializable {
         miSign.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 if (HomeScreenController.this.lvFiles.getItems().size() > 0) {
-                    StringBuilder sb = new StringBuilder();
-                    SignatureBroker signatureBroker = new SignatureBroker();
 
-                    HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                        if (signatureBroker.digitallySignFile(listedFiles.get(item.toString()).getAbsolutePath())) {
-                            sb.append(String.format("%s signed\n", listedFiles.get(item.toString()).getName()));
-                        }
-                    });
-                    ConfirmationBox.getSuccessBox("Files signed successfully!", sb.toString());
+                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                    String selectedPrivateKey = choiceSelectDialog.createDialog("Sign Files",
+                                                                         "Select Private Key",
+                                                                         "Private keys:", KeyService.listPrivateKeyDirectories());
+                    if(selectedPrivateKey != null){
+                        StringBuilder sb = new StringBuilder();
+                        SignatureBroker signatureBroker = new SignatureBroker();
+
+                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                            if (signatureBroker.digitallySignFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedPrivateKey)) {
+                                sb.append(String.format("%s signed\n", listedFiles.get(item.toString()).getName()));
+                            }
+                        });
+                        ConfirmationBox.getSuccessBox("Files signed successfully!", sb.toString());
+                    }
                 } else {
                     ConfirmationBox.getFailBox("No files added in the list!");
                 }

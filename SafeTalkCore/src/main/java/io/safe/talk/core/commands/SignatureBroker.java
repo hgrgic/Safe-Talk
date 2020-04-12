@@ -5,8 +5,8 @@ import io.safe.talk.core.commands.impl.signature.DigitallySignCommand;
 
 public class SignatureBroker {
 
-    public boolean digitallySignFile(String targetFilePath) {
-        Executable executableCommand = new DigitallySignCommand(targetFilePath);
+    public boolean digitallySignFile(String targetFilePath, String privateKeyName) {
+        Executable executableCommand = new DigitallySignCommand(targetFilePath, privateKeyName);
         return executableCommand.execute();
     }
 

@@ -18,10 +18,12 @@ import javax.crypto.NoSuchPaddingException;
 
 public class DigitallySignCommand implements Executable {
 
+    private String privateKeyName;
     private String targetFilePath;
     private String outputPath;
 
-    public DigitallySignCommand(String targetFilePath) {
+    public DigitallySignCommand(String targetFilePath, String privateKeyName) {
+        this.privateKeyName = privateKeyName;
         this.targetFilePath = targetFilePath;
         this.outputPath = targetFilePath + ".sig";
     }
@@ -30,7 +32,7 @@ public class DigitallySignCommand implements Executable {
     public boolean execute() {
         try {
             RSADecryption dc = new RSADecryption();
-            PrivateKey privateKey = dc.getPrivate(Encryptable.DEFAULT_PRIVATE_KEY_LOCATION);
+            PrivateKey privateKey = dc.getPrivate(Encryptable.generateCustomPrivateKeyLocation(this.privateKeyName));
             SignatureAgent signatureAgent = new SignatureAgent();
             signatureAgent.execute(privateKey, this.targetFilePath, this.outputPath);
             return true;
