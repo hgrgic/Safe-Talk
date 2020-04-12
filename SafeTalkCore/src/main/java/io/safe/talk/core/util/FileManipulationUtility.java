@@ -1,4 +1,4 @@
-package io.safe.talk.util;
+package io.safe.talk.core.util;
 
 import org.apache.commons.io.FileUtils;
 

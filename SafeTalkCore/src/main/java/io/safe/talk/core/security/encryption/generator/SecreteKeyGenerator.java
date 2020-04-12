@@ -1,6 +1,6 @@
-package io.safe.talk.encryption.generator;
+package io.safe.talk.core.security.encryption.generator;
 
-import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.Encryptable;
 
 import java.io.File;
 import java.io.FileOutputStream;

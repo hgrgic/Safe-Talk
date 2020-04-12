@@ -1,4 +1,4 @@
-package io.safe.talk.util;
+package io.safe.talk.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -3,8 +3,8 @@ package io.safe.talk.core.commands.impl.contacts;
 import io.safe.talk.core.commands.Executable;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.OperationsLogger;
-import io.safe.talk.encryption.Encryptable;
-import io.safe.talk.util.FileManipulationUtility;
+import io.safe.talk.core.security.encryption.Encryptable;
+import io.safe.talk.core.util.FileManipulationUtility;
 
 import java.io.File;
 import java.io.IOException;

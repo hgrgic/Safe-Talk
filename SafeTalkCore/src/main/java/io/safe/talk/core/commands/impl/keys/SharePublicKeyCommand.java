@@ -3,7 +3,7 @@ package io.safe.talk.core.commands.impl.keys;
 import io.safe.talk.core.commands.Executable;
 import io.safe.talk.core.exceptions.DestinationDirectoryException;
 import io.safe.talk.core.logger.OperationsLogger;
-import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.Encryptable;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 

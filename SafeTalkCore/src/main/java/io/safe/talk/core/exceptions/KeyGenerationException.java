@@ -1,4 +1,4 @@
-package io.safe.talk.exceptions;
+package io.safe.talk.core.exceptions;
 
 public class KeyGenerationException extends RuntimeException {
     public KeyGenerationException(String message) {

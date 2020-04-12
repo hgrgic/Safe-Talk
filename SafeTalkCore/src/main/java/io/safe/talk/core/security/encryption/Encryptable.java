@@ -1,7 +1,7 @@
-package io.safe.talk.encryption;
+package io.safe.talk.core.security.encryption;
 
-import io.safe.talk.exceptions.KeyGenerationException;
-import io.safe.talk.util.FileManipulationUtility;
+import io.safe.talk.core.exceptions.KeyGenerationException;
+import io.safe.talk.core.util.FileManipulationUtility;
 
 public final class Encryptable {
 
@@ -9,8 +9,6 @@ public final class Encryptable {
     }
 
     public static final String ROOT_KEY_LOCATION = FileManipulationUtility.pathBuilder(System.getProperty("user.home"), "Installs", "safe-talk");
-    public static final String DEFAULT_PUBLIC_KEY_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", "public.key");
-    public static final String DEFAULT_PRIVATE_KEY_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal", "private.key");
     public static final String CONTACTS_LOCATION = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "contacts");
     public static final String PERSONAL_KEY_LOCATIONS = FileManipulationUtility.pathBuilder(ROOT_KEY_LOCATION, "personal");
 

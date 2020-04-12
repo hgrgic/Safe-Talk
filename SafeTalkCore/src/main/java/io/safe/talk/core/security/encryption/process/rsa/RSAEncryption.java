@@ -1,6 +1,6 @@
-package io.safe.talk.encryption.process.rsa;
+package io.safe.talk.core.security.encryption.process.rsa;
 
-import io.safe.talk.encryption.process.EncryptionHelper;
+import io.safe.talk.core.security.encryption.process.EncryptionHelper;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;

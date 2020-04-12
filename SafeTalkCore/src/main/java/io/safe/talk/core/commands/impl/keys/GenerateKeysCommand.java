@@ -4,9 +4,9 @@ import io.safe.talk.core.commands.Executable;
 import io.safe.talk.core.exceptions.EncryptionException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.OperationsLogger;
-import io.safe.talk.encryption.Encryptable;
-import io.safe.talk.encryption.generator.SecreteKeyGenerator;
-import io.safe.talk.exceptions.KeyGenerationException;
+import io.safe.talk.core.security.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.generator.SecreteKeyGenerator;
+import io.safe.talk.core.exceptions.KeyGenerationException;
 
 import java.io.File;
 import java.io.IOException;

@@ -7,7 +7,7 @@ import io.safe.talk.core.exceptions.DestinationDirectoryException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.ErrorLogger;
 import io.safe.talk.core.service.KeyService;
-import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
 import io.safe.talk.gui.dialogs.ConfirmationBox;
 import io.safe.talk.gui.dialogs.ContactImportDialog;

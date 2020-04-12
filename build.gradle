@@ -37,7 +37,6 @@ subprojects {
 
 project(':SafeTalkCore') {
     dependencies {
-        compile project(':STEncryption')
         compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
     }
 }

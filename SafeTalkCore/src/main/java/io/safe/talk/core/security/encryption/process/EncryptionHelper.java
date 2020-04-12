@@ -1,4 +1,4 @@
-package io.safe.talk.encryption.process;
+package io.safe.talk.core.security.encryption.process;
 
 import java.io.File;
 import java.io.FileInputStream;

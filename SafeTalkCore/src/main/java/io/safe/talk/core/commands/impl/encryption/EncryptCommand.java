@@ -5,7 +5,7 @@ import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.EncryptionException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.OperationsLogger;
-import io.safe.talk.encryption.process.aes.AESEncryption;
+import io.safe.talk.core.security.encryption.process.aes.AESEncryption;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

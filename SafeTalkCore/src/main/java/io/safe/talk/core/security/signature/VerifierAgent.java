@@ -1,4 +1,4 @@
-package io.safe.talk.digital.signature;
+package io.safe.talk.core.security.signature;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

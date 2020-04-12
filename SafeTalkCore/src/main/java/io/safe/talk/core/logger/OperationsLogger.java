@@ -1,7 +1,7 @@
 package io.safe.talk.core.logger;
 
-import io.safe.talk.encryption.Encryptable;
-import io.safe.talk.util.FileManipulationUtility;
+import io.safe.talk.core.security.encryption.Encryptable;
+import io.safe.talk.core.util.FileManipulationUtility;
 
 import java.io.File;
 import java.io.IOException;

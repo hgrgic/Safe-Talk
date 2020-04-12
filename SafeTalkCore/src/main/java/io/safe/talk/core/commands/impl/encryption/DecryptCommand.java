@@ -5,8 +5,8 @@ import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.EncryptionException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.OperationsLogger;
-import io.safe.talk.encryption.Encryptable;
-import io.safe.talk.encryption.process.aes.AESDecryption;
+import io.safe.talk.core.security.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.process.aes.AESDecryption;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -19,14 +19,6 @@ public class DecryptCommand implements Executable {
     private String targetFilePath;
     private String privateKeyLocation;
 
-    /**
-     * Uses default private key location
-     * @param targetFilePath
-     */
-    public DecryptCommand(String targetFilePath) {
-        this.targetFilePath = targetFilePath;
-        this.privateKeyLocation = Encryptable.DEFAULT_PRIVATE_KEY_LOCATION;
-    }
 
     /**
      * Uses custom specified private key location

@@ -1,8 +1,8 @@
-package io.safe.talk.encryption.process.aes;
+package io.safe.talk.core.security.encryption.process.aes;
 
-import io.safe.talk.encryption.generator.SecreteKeyGenerator;
-import io.safe.talk.encryption.process.EncryptionHelper;
-import io.safe.talk.encryption.process.rsa.RSAEncryption;
+import io.safe.talk.core.security.encryption.generator.SecreteKeyGenerator;
+import io.safe.talk.core.security.encryption.process.EncryptionHelper;
+import io.safe.talk.core.security.encryption.process.rsa.RSAEncryption;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

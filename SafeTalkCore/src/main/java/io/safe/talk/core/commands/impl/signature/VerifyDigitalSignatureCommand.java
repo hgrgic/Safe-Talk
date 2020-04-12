@@ -2,8 +2,8 @@ package io.safe.talk.core.commands.impl.signature;
 
 import io.safe.talk.core.commands.Executable;
 import io.safe.talk.core.logger.ErrorLogger;
-import io.safe.talk.digital.signature.VerifierAgent;
-import io.safe.talk.encryption.process.rsa.RSAEncryption;
+import io.safe.talk.core.security.signature.VerifierAgent;
+import io.safe.talk.core.security.encryption.process.rsa.RSAEncryption;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

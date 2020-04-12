@@ -1,6 +1,6 @@
 package io.safe.talk.core.service;
 
-import io.safe.talk.encryption.Encryptable;
+import io.safe.talk.core.security.encryption.Encryptable;
 
 import java.io.File;
 import java.util.ArrayList;
