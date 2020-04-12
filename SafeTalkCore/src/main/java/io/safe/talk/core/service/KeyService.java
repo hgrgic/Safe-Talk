@@ -8,17 +8,16 @@ import java.util.List;
 
 public class KeyService {
 
-    public static List<String> listPrivateKeyDirectories(){
-        return KeyService.listDirectories(Encryptable.PERSONAL_KEY_LOCATIONS);
+    public static List<String> listPrivateKeyDirectories() throws NullPointerException{
+        return KeyService.listKeyDirectories(Encryptable.PERSONAL_KEY_LOCATIONS);
     }
 
-    public static List<String> listContactsKeyDirectories(){
-        return KeyService.listDirectories(Encryptable.CONTACTS_LOCATION);
+    public static List<String> listContactsKeyDirectories() throws NullPointerException{
+        return KeyService.listKeyDirectories(Encryptable.CONTACTS_LOCATION);
     }
 
-    private static List<String> listDirectories(String path){
+    private static List<String> listKeyDirectories(String path) throws NullPointerException{
         List<String> entities = new ArrayList<>();
-
         File root = new File(path);
 
         for(File file: root.listFiles()){

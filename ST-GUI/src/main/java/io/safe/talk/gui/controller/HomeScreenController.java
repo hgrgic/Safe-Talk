@@ -71,11 +71,11 @@ public class HomeScreenController implements Initializable {
                     StringBuilder sb = new StringBuilder();
                     SecurityBroker securityBroker = new SecurityBroker();
 
-                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
-                    String selectedKey = choiceSelectDialog.createDialog("Key Selection",
-                                                                         "Select Private Key",
-                                                                         "Private keys:", KeyService.listPrivateKeyDirectories());
                     try {
+                        SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                        String selectedKey = choiceSelectDialog.createDialog("Key Selection",
+                                                                             "Select Private Key",
+                                                                             "Private keys:", KeyService.listPrivateKeyDirectories());
                         if(selectedKey != null){
                             HomeScreenController.this.lvFiles.getItems().forEach(item -> {
                                 try {
@@ -87,13 +87,17 @@ public class HomeScreenController implements Initializable {
                                 }
                             });
                         }
-                    } catch (Exception e) {
+                        ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
+                    }catch (NullPointerException npe) {
+                        ConfirmationBox.getFailBox("Decryption failed!", "Check that necessary application file structure exists. " +
+                            "\nIt is possible you did not generate any personal key-pair.");
+                        return;
+                    }
+                    catch (Exception e) {
                         ErrorLogger.getLogger().log(Level.SEVERE, "Decryption failed", e);
                         ConfirmationBox.getFailBox("Decryption failed!", e.getLocalizedMessage());
                         return;
                     }
-
-                    ConfirmationBox.getSuccessBox("Files decrypted successfully!", sb.toString());
                 } else {
                     ConfirmationBox.getFailBox("No files added in the list!");
                 }
@@ -191,25 +195,30 @@ public class HomeScreenController implements Initializable {
 
         miSign.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                if (HomeScreenController.this.lvFiles.getItems().size() > 0) {
+                try{
+                    if (HomeScreenController.this.lvFiles.getItems().size() > 0) {
 
-                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
-                    String selectedPrivateKey = choiceSelectDialog.createDialog("Sign Files",
-                                                                         "Select Private Key",
-                                                                         "Private keys:", KeyService.listPrivateKeyDirectories());
-                    if(selectedPrivateKey != null){
-                        StringBuilder sb = new StringBuilder();
-                        SignatureBroker signatureBroker = new SignatureBroker();
+                        SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                        String selectedPrivateKey = choiceSelectDialog.createDialog("Sign Files",
+                                                                                    "Select Private Key",
+                                                                                    "Private keys:", KeyService.listPrivateKeyDirectories());
+                        if(selectedPrivateKey != null){
+                            StringBuilder sb = new StringBuilder();
+                            SignatureBroker signatureBroker = new SignatureBroker();
 
-                        HomeScreenController.this.lvFiles.getItems().forEach(item -> {
-                            if (signatureBroker.digitallySignFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedPrivateKey)) {
-                                sb.append(String.format("%s signed\n", listedFiles.get(item.toString()).getName()));
-                            }
-                        });
-                        ConfirmationBox.getSuccessBox("Files signed successfully!", sb.toString());
+                            HomeScreenController.this.lvFiles.getItems().forEach(item -> {
+                                if (signatureBroker.digitallySignFile(listedFiles.get(item.toString()).getAbsolutePath(), selectedPrivateKey)) {
+                                    sb.append(String.format("%s signed\n", listedFiles.get(item.toString()).getName()));
+                                }
+                            });
+                            ConfirmationBox.getSuccessBox("Files signed successfully!", sb.toString());
+                        }
+                    } else {
+                        ConfirmationBox.getFailBox("No files added in the list!");
                     }
-                } else {
-                    ConfirmationBox.getFailBox("No files added in the list!");
+                }catch (NullPointerException npe){
+                    ConfirmationBox.getFailBox("Signature procedure failed!", "Check that necessary application file structure exists. " +
+                        "\nIt is possible that you did not generate any personal key-pair.");
                 }
             }
         });
@@ -268,6 +277,9 @@ public class HomeScreenController implements Initializable {
                     }
                 } catch (DestinationDirectoryException e) {
                     ConfirmationBox.getFailBox("Share key failed!", e.getLocalizedMessage());
+                } catch (NullPointerException npe){
+                    ConfirmationBox.getFailBox("Cannot share keys!", "Check that necessary application file structure exists. " +
+                        "\nIt is possible that you did not generate any personal key-pair.");
                 }
 
 

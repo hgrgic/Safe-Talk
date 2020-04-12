@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+//TODO: Remove dependency on logger implementation from core.
 public class ErrorLogger {
     private static Logger logger = Logger.getLogger("ErrorLog");
     private static boolean configured;
