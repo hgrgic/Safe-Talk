@@ -12,7 +12,7 @@ public class ZipProcessingUtility {
     private ZipProcessingUtility() {
     }
 
-    public static void startZipProcess(File srcFiles, String zipName, String zipOutput) throws IOException {
+    public static void zip(File srcFiles, String zipName, String zipOutput) throws IOException {
         String outPutZip = FileManipulationUtility.pathBuilder(zipOutput, zipName);
         FileOutputStream fos = new FileOutputStream(outPutZip);
         ZipOutputStream zipOut = new ZipOutputStream(fos);

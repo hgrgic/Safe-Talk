@@ -30,4 +30,11 @@ public final class Encryptable {
 
         throw new KeyGenerationException("Key name cannot be empty");
     }
+
+    public static String generateCustomContactPublicKeyLocation(String contactName) {
+        if (contactName.trim().length() > 0) {
+            return FileManipulationUtility.pathBuilder(CONTACTS_LOCATION, contactName, "public.key");
+        }
+        throw new KeyGenerationException("Contact name cannot be empty");
+    }
 }

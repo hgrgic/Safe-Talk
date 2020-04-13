@@ -24,6 +24,7 @@
                 <Menu mnemonicParsing="false" text="Contact">
                     <items>
                         <MenuItem fx:id="miImportContact" mnemonicParsing="false" text="Import Contact"/>
+                        <MenuItem fx:id="miShareContact" mnemonicParsing="false" text="Share Contact"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Digital Signatures">

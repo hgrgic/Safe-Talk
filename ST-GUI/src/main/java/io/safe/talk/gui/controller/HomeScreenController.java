@@ -6,6 +6,7 @@ import io.safe.talk.core.exceptions.CriticalCommandException;
 import io.safe.talk.core.exceptions.DestinationDirectoryException;
 import io.safe.talk.core.exceptions.FileManipulationException;
 import io.safe.talk.core.logger.ErrorLogger;
+import io.safe.talk.core.service.ContactService;
 import io.safe.talk.core.service.KeyService;
 import io.safe.talk.core.security.encryption.Encryptable;
 import io.safe.talk.gui.dialogs.AboutDialog;
@@ -42,6 +43,7 @@ public class HomeScreenController implements Initializable {
     public MenuItem miVerifySig;
     public MenuItem miSharePublicKey;
     public MenuItem miImportContact;
+    public MenuItem miShareContact;
 
     private Map<String, File> listedFiles;
 
@@ -300,6 +302,28 @@ public class HomeScreenController implements Initializable {
                         ConfirmationBox.getFailBox("Contact import failed!", e.getLocalizedMessage());
                     }
 
+                }
+            }
+        });
+
+        miShareContact.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    SimpleChoiceSelectDialog choiceSelectDialog = new SimpleChoiceSelectDialog();
+                    String contactName = choiceSelectDialog.createDialog("Contact Selection",
+                                                                         "Select Contact",
+                                                                         "Contacts:", ContactService.listContactDirectories());
+                    if (contactName != null) {
+                        SecurityBroker securityBroker = new SecurityBroker();
+                        if(securityBroker.exportContact(contactName)){
+                            ConfirmationBox.getSuccessBox("Copy success!", "Contact key successfully copied to clipboard!");
+                        }else {
+                            ConfirmationBox.getFailBox("Share failed!", "Contact public key could not be copied to clipboard.");
+                        }
+                    }
+                } catch (FileManipulationException e) {
+                    ConfirmationBox.getFailBox("Contact share failed!", e.getLocalizedMessage());
                 }
             }
         });

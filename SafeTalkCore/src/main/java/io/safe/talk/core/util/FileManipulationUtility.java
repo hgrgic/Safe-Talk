@@ -4,6 +4,8 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileManipulationUtility {
 
@@ -16,8 +18,6 @@ public class FileManipulationUtility {
         for (File file : files) {
             FileUtils.moveFileToDirectory(file, destinationDir, createDir);
         }
-
-
     }
 
     public static void moveToFile(String destinationPath, File sourceFile) throws IOException {
@@ -53,7 +53,6 @@ public class FileManipulationUtility {
         if (!newDir.exists()) {
             newDir.mkdirs();
         }
-
         return emptyDirPath;
     }
 
@@ -64,7 +63,18 @@ public class FileManipulationUtility {
             sb.append(File.separator);
             sb.append(dir);
         }
-
         return sb.toString();
+    }
+
+    public static List<String> listDirectories(String path) throws NullPointerException{
+        List<String> entities = new ArrayList<>();
+        File root = new File(path);
+
+        for(File file: root.listFiles()){
+            if(file.isDirectory()){
+                entities.add(file.getName());
+            }
+        }
+        return entities;
     }
 }

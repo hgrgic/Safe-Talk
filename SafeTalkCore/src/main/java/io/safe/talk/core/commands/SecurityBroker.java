@@ -1,5 +1,6 @@
 package io.safe.talk.core.commands;
 
+import io.safe.talk.core.commands.impl.contacts.ExportContactCommand;
 import io.safe.talk.core.commands.impl.encryption.DecryptCommand;
 import io.safe.talk.core.commands.impl.encryption.EncryptCommand;
 import io.safe.talk.core.commands.impl.contacts.ImportContactCommand;
@@ -39,6 +40,11 @@ public class SecurityBroker {
 
     public boolean importContact(String publicKeyFilePath, String contactName) throws FileManipulationException {
         Executable executableCommand = new ImportContactCommand(publicKeyFilePath, contactName);
+        return executableCommand.execute();
+    }
+
+    public boolean exportContact(String contactName) throws FileManipulationException {
+        Executable executableCommand = new ExportContactCommand(contactName);
         return executableCommand.execute();
     }
 }
