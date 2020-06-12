@@ -17,7 +17,7 @@ public class AESDecryption extends EncryptionHelper {
         try (FileInputStream in = new FileInputStream(inputFile)) {
             SecretKeySpec skey;
 
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher cipher = Cipher.getInstance("RSA/None/OAEPWithSHA-1AndMGF1Padding");
             cipher.init(Cipher.DECRYPT_MODE, new RSADecryption().getPrivate(privateKeyLocation));
 
 
@@ -31,7 +31,7 @@ public class AESDecryption extends EncryptionHelper {
                 if (in.read(iv) > 0) {
                     IvParameterSpec ivspec = new IvParameterSpec(iv);
 
-                    Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
+                    Cipher ci = Cipher.getInstance("AES/GCM/NoPadding");
                     ci.init(Cipher.DECRYPT_MODE, skey, ivspec);
 
                     String originalName = inputFile.substring(0, inputFile.indexOf(".enc"));

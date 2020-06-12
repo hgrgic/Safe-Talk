@@ -28,13 +28,13 @@ public class RSADecryption extends EncryptionHelper {
 
     public RSADecryption() throws NoSuchAlgorithmException, NoSuchPaddingException {
         super();
-        this.cipher = Cipher.getInstance("RSA");
+        this.cipher = Cipher.getInstance("RSA/None/OAEPWithSHA-1AndMGF1Padding");
     }
 
     public PrivateKey getPrivate(String filename) throws IOException, GeneralSecurityException {
         byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
+        KeyFactory kf = KeyFactory.getInstance("RSA/None/OAEPWithSHA-1AndMGF1Padding");
         return kf.generatePrivate(spec);
     }
 
